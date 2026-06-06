@@ -1,0 +1,3029 @@
+---
+title: "Probability and Statistics I"
+author: "Dr. Margaret Kinyua"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+always_allow_html: true
+output:
+  rmdformats::readthedown:
+    highlight: tango
+    use_bookdown: true
+    toc_depth: 3
+    number_sections: true
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    number_sections: true
+    theme: flatly
+    highlight: tango
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r style, echo=FALSE, message=FALSE, warning=FALSE, results="asis"}
+suppressPackageStartupMessages({
+  library(knitr)
+  library(rmarkdown)
+  library(bookdown)
+})
+options(width = 100)
+knitr::opts_chunk$set(fig.width = 5, fig.height = 5)
+```
+
+```{r libraries, echo=FALSE, message=FALSE, warning=FALSE}
+library(e1071)
+library(lattice)
+library(ggplot2)
+library(mvtnorm)
+library(DiagrammeR)
+library(tinytex)
+library(webshot2)
+```
+
+```{css, echo=FALSE}
+/* Heading colors */
+h1 { color: #1a5276; }
+h2 { color: #1f618d; }
+h3 { color: #2e86c1; }
+h4 { color: #117a65; }
+.theorem-box {
+  background-color: #eaf4fb;
+  border-left: 5px solid #2e86c1;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+.formula-box {
+  background-color: #eafaf1;
+  border-left: 5px solid #117a65;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+.example-box {
+  background-color: #fef9e7;
+  border-left: 5px solid #f39c12;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+```
+
+
+# Topic One: Nature and Presentation of Statistical Data 
+
+## Objectives
+
+By the end of the session, you should be able to:
+
+- Understand the meaning, nature, importance and limitations of statistics
+- Explain the types of variables
+- Classify measurements and data into various types    
+
+---
+
+## Introduction 
+
+### Meaning and Definition of Statistics
+
+Statistics has different meanings for different people and the purpose. Statistics has been defined also in different ways by different writers. This is due to changes in the scope of statistics with the passage of time. 
+
+Statistics is used in two senses: 
+
+- In plural sense meaning a collection of facts or estimates – the figure themselves (numerical data). 
+- As a singular noun meaning   Statistics is the scientific method of collecting, organizing, summarizing, presenting and analyzing data, as well as interpreting data. (Interpretation means drawing valid conclusions and making reasonable decisions on the basis of such analysis).
+
+a. Collection of data: Once an investigator has collected data through a survey, it is necessary to edit these data in order to correct any apparent inconsistencies, ambiguities, recording errors or for that matter any mistake that can enter into the actual computations. But even before the data has been collected and edited, it is assumes that these can be suitably classed according to some common characteristic of the population sampled.
+b. Description of data: The organized data can now be presented in the form of tables or diagrams or graphs. This presentation in an orderly manner facilitates the understanding as well as analysis of data.
+c. Analysis of data: The basic purpose of data analysis is to make it useful for certain conclusions. This analysis may simply be a critical observation of data to draw some meaningful conclusions about it or it may involve highly complex and sophisticated mathematical techniques. Some simple statistical tools such as calculations of averages, dispersion of data around averages and percentages are commonly used to analyze data.
+c. Interpretation of data: Interpretation means drawing conclusions from the data which form the basis of decision making. Correct interpretation requires a high degree of skill and experience and is necessary in order to draw valid conclusions.
+
+---
+
+### Uses of statistics
+
+Statistics is an increasingly important subject which is useful in many types of scientific investigations. Statistics is particularly useful in situations where there is experimental uncertainty and may be defined as ‘the science of making decisions in the face of uncertainty’.  It is applicable in various fields including education, business, agriculture, engineering.
+
+- To present data in a concise and definite form – helps in classifying and tabulating raw data for processing and further tabulation for other users. 
+- To make it easy to understand complex and large data -  permits summarization and presentation of large quantities of information. i.e. It condenses and summarizes voluminous data into a few presentable, understandable and precise figures. For example, stock market prices of individual stocks and their trends are highly complex to comprehend, but a graph of prices trends gives us the overall picture at a glance.
+- To undertake and understand research in our areas of interest such as It helps in determining functional relationship between two or more phenomenon. Statistical techniques such as correlational analysis assist in establishing the degree of association between two or more independent variables. For example, the coefficient of correlation between literacy and employment gives us the degree of association between extent of training and industrial productivity.
+- Used in government and other organizations to formulate new programmes and policies as well as in administration ie It helps the central management and the government in formulating policies. Example, the recently conducted census, will be used as a source of information for planning by the government for the next 10 years until another census is conducted in 2019. 
+- For comparison of variables in different sets of data - Arrangement of data with respect to different characteristics facilitates comparison and interpretation. For example, data on age, height, gender, and family income of college students gives us a much better picture of students when the data is categorized relative to these characteristics.
+- Aids in forecasting outcomes of future events- Statistical methods are highly useful tools in analyzing the past data and predicting some future trends. Eg Helps businesses in decision making by making future estimates and expectations . For example, the sales for a particular product for the next year can be computed by knowing the sales for the same product over the previous years, the current market trends and the possible changes in the variable that affect the demand of the product. 
+
+---
+
+### Scope of Statistics
+
+Some of the important areas where the knowledge of statistics is usefully applied are as follows: 
+
+1. Government. Various departments of the government collect and interpret vast amount of data and information for efficient functioning and decision making. 
+2. Economics. Statistics are widely used in economics study and research. The subject of economics is mainly concerned with production and distribution of wealth as well as savings and investments. Some of the areas of economic interest in which statistical tools are used are as follows: 
+   -  Statistical methods are extensively used in measuring and forecasting Gross National Product ( GNP ). 
+   -  Economic stability is primarily judged by statistical studies of business cycles. 
+   -  Statistical analyzes of population growth, unemployment figures, rural or urban population shifts and so on influence much of the economic policy making. 
+   -  Econometric models which involve application of statistical methods and used for optimum utilization of resources available. 
+   -  Financial statistics are necessary in the fields of money and banking including consumer savings and credit availability. 
+3. Physical, Natural and Social Sciences. In physical sciences, as an example, the science of meteorology uses statistics in analyzing the data gathered by satellites in predicting weather conditions. 
+4. Statistics and Research. There is hardly any advanced research going on without the use of statistics in one form or another. Statistics are used extensively in medical, pharmaceutical and agricultural research. The effectiveness of a new drug is determined by statistical experimentation and evaluation. 
+5. Other Areas. Statistics are commonly used by insurance companies, stock brokerage firms, banks, public utility companies and so on. Statistics are also immensely useful to politicians since they can predict their chance of winning through the use of sampling techniques in random selection of voters sampled and studying their attitude on issues and policies.
+
+---
+
+### Limitations of Statistics
+
+Statistics has a number of limitations, pertinent among them are as follows:
+
+- It does not deal with individual values. Statistics only deals with aggregate values. For example, the marks obtained by one student in a class does not carry any meaning in itself, unless it can be compared with a set standard or with other students in the same class or with his own marks obtained earlier.
+- It cannot deal with qualitative characteristics. Statistics is not applicable to qualitative characteristics such as honesty, kindness, goodness, colour, poverty, beauty, and so on, since these cannot be expressed in quantitative terms. The characteristics, however, can be statistically dealt with if some quantitative values can be assigned to these with logical criterion.
+- Statistical conclusions are not universally true. Since statistics is not an exact science, as is the case with natural sciences, the statistical conclusions are true only under certain assumptions.
+- Statistical interpretation requires a high degree of skill and understanding of the subject. In order to get meaningful results, it is necessary that the data be properly and professionally collected and critically interpreted. It requires extensive training to read and analyze statistics in its proper context.
+- Statistics can be misused. The famous statement that ‘figures don’t lie but the liars can figure’ is a testimony to the misuse of statistics. Thus, inaccurate or incomplete figures can be manipulated to get desirable references. Example: advertising slogans such as “4 out of 5 dentists recommend brand X toothpaste” give the impression that 80% of all dentists recommend this brand. This may not be true since we don’t know how big the sample is or whether the sample represents the entire population. Another example is opinion polls on the news where percentages are given without sample size or representativeness.
+- There are certain phenomena or concepts where statistics cannot be used. This is because these phenomena or concepts are not amenable to measurement. For example, beauty, intelligence, and courage cannot be quantified. Statistics has no place where quantification is not possible.
+- Statistics reveal the average behaviour—the normal or general trend. Applying an ‘average’ to an individual may lead to wrong or dangerous conclusions. For example, an average river depth of four feet does not mean it is safe throughout; some points may be much deeper.
+- Since statistics are collected for a particular purpose, such data may not be relevant or useful in other situations. For example, secondary data (i.e., data originally collected by someone else) may not be useful for another person.
+- Statistics are not 100 per cent precise as Mathematics or Accountancy. Users should be aware of this limitation.
+- In statistical surveys, sampling is generally used as it is not physically possible to cover the whole universe. The results may not fully represent the universe. Moreover, surveys with identical sample sizes but different sample units may give different outcomes.
+- At times, association or relationship between two or more variables is studied, but this does not indicate a cause-and-effect relationship. It only shows similarity or dissimilarity in movement. Interpretation requires care.
+- A major limitation of statistics is that it does not reveal everything about a phenomenon. Some background information or other relevant aspects may not be covered. The user of statistics must interpret results while considering other relevant information.
+
+---
+
+### Misuses
+
+Sometimes people, knowingly or unknowingly, use statistical data wrongly. Such forms of misuse include:
+
+- Failure to give the sources of data: this may compromise the reliability of the data because the user of such data will not know how far this data will fit his/her situation including if he/she wants to refer to the original source.
+- Defective data: This may be done knowingly in order to defend one’s position or to prove a particular point. This apart, the definition used to denote a certain phenomenon may be defective. For example, in case of data relating to unemployed persons, the definition may include even those who are employed, though partially. The question here is how far it is justified to include partially employed persons amongst unemployed ones.
+- Unrepresentative sample: In statistics, several times one has to conduct a survey, which necessitates to choose a sample from the given population or universe. The sample may turn out to be unrepresentative of the universe. One may choose a sample just on the basis of convenience. He may collect the desired information from either his friends or nearby respondents in his neighbourhood even though such respondents do not constitute a representative sample.
+- Inadequate sample: At times one may conduct a survey based on an extremely inadequate sample. For example, in a city we may find that there are 100,000 households. When we have to conduct a household survey, we may take a sample of merely 100 households comprising only 0.1 per cent of the universe. A survey based on such a small sample may not yield right information.
+- Unfair Comparisons: For instance, one may construct an index of production choosing the base year where the production was much less. Then he may compare the subsequent year’s production from this low base. Such a comparison will undoubtedly give a wrong picture of the production though in reality it is not so. Another source of unfair comparisons could be when one makes absolute comparisons instead of relative ones. An absolute comparison of two figures, say, of production or export, may show a good increase, but in relative terms it may turn out to be very negligible. Another example of unfair comparison is when the population in two cities is different, but a comparison of overall death rates and deaths by a particular disease is attempted. Such a comparison is wrong. Likewise, when data are not properly classified or when changes in the composition of population in the two years are not taken into consideration, comparisons of such data would be unfair as they would lead to misleading conclusions.
+- Unwanted conclusions: This may be as a result of making false assumptions. For example, while making projections of population in the next five years, one may assume a lower rate of growth though the past two years indicate otherwise. Sometimes one may not be sure about the changes in business environment in the near future. In such a case, one may use an assumption that may turn out to be wrong. Another source of unwarranted conclusion may be the use of wrong average. Suppose in a series there are extreme values, one is too high while the other is too low, such as 800 and 50. The use of an arithmetic average in such a case may give a wrong idea. Instead, harmonic mean would be proper in such a case.
+- Confusion of correlation and causation: In statistics, several times one has to examine the relationship between two variables. A close relationship between the two variables may not establish a cause-and-effect-relationship in the sense that one variable is the cause and the other is the effect. It should be taken as something that measures degree of association rather than try to find out causal relationship. 
+
+---
+
+### Branches of statistics
+
+Statistics can be divided into two branches: 
+
+- Descriptive:  statistics that summarize the characteristics of given data, without trying to extrapolate or make predictions. Utilizes numerical and graphical method to summarize the information, look for patterns in the data set and present the information in a convenient form (Describes or summarizes things you definitely know).
+
+- Inferential:  statistics used to make claims or predictions about the larger population based on a subset (sample) of that population. Utilizes sample data to make estimates, decisions, predictions and other generalizations about a larger set of data. (Compares groups, tests hypothesis or predicts or infers).
+Conclusions made are called Statistical inference which cannot be absolutely certain hence the need to use probability in drawing conclusions.
+
+Remark:  
+In this course, you will study numerical and graphical ways to describe and display your data. This area of statistics is what we have called "Descriptive Statistics." You will learn how to calculate, and even more importantly, how to interpret these measurements and graphs.
+
+---
+
+## Data
+
+### Definition of some terms.
+
+- Organization of Data - Data organization, in broad terms, refers to the method of classifying and organizing data sets to make them more useful. Some IT experts apply this primarily to physical records, although some types of data organization can also be applied to digital records.
+
+- Data is a collection of observations from an experiment or a survey.
+
+- A population is a set of units (people, objects, transactions or events). The entire set of all possible outcomes or measurements of interest.
+
+- In collecting data, it’s often not possible to observe the whole group referred to as target group population; hence one observes a smaller representative of the group called a sample (sample - a subset of the population for which we have data, and that we hope is representative of the population).
+
+- If the whole group is observed a census has been conducted.
+
+- If a smaller group is observed a sample survey has been conducted.
+
+- If the sample is a representative of a population, then important conclusions about population can be made from it.
+
+- Target population may be finite or infinite.
+
+- Finite Population: e.g. number of students in ABC University.
+
+- Infinite Population: e.g. number of insects in ABC University.
+
+- Variable: A characteristic or property of an individual population unit. A quantity that can assume prescribed set of values. May be discrete, continuous or constant. 
+
+- Discrete Variable - Take on a finite number (values), are countable. E.g. size of a family.
+
+- Continuous Variable - Takes any value within a specified range. E.g. Height of students.
+
+- Constant Variables - Takes one value. E.g. Number of hours in a day. 
+
+---
+
+### Levels of Measurement
+
+- Measurement: is the process we use to assign numbers to variables of individual population units according to a set of rules.
+- Nominal measurement – classifies data into mutually exclusive (non-overlapping) exhausting categories in which no order, or ranking can be imposed on the data e.g. gender - male & female, bloodgroups O. A, B & AB, eye colour – blue, brown, religion etc.
+- Ordinal - classifies data into categories that can be ranked or ordered with respect to each other. For example – guest speaker might be ranked as good, average or poor, health condition of a patient can be good, better or best. The precise difference between ranks does not exist. More examples: Grade A, B… etc, Ranking scale (poor, good, excellent, etc), judging (1st, 2ndetc)
+- Interval measurement: classifies and ranks data and precise difference between units of measurement exist. However, there is no meaningful zero. For example – temperature has no meaningful difference between each unit. 0 degrees Celsius does not mean there is no heat, IQ, Exam score.
+- Ratio measurement: There is a difference between units and a true zero exists. Examples – height, time, age, salary, etc.
+
+---
+
+### Types of Data
+
+All data can be classified as one of two general types: Quantitative Data and Qualitative Data.
+
+1. Quantitative data (Numerical data – it yields numerical responses, for example, “What is your age?”)
+They are data that are measured on a naturally occurring numerical scale. They represent a measurable quantity. Observations are numbers representing an amount or count of a certain characteristic like height, weight etc
+
+Examples: The number of patients admitted in the County hospital, the current unemployment rate for each county the scores of a sample of 150 students in an exam, the number of male students in the class.
+
+Ratio and interval measurement fall under the quantitative category.
+
+These data can be classified into two types: discrete and continuous.  
+
+- Discrete Data - Discrete data can only take on particular values and thus has clear boundaries. Assumes only countable number of values. Example: You can have 30 students or 31 students, but not 30.5 students, so “number of students” is a discrete variable, family size etc. In fact, any variable based on counting is discrete, whether you are counting the number of books purchased in a year or the number of motor accidents reported in a year.
+- Continuous Data - Continuous data can take any value, or any value within a range or an interval. Most data measured by interval and ratio scales, other than that based on counting, is continuous. Example: weight and height of students, distance from town to campus, an income received by an employee are all continuous.
+
+2. Qualitative data (Categorical data – that which yields responses such as Yes or No. for example,” Did you buy the books?”)  
+
+Qualitative data cannot be measured on a natural numerical scale; they can only be classified into groups or categories. Take on values that are names or labels. Categories are non - overlapping, may or may not suggest an order or rank.
+
+Examples: The political party affiliations in a sample of 50 chief executive officers, the size of a car (subcompact, compact, mid-size, or full-size) rented by each of a sample of 30 business travelers, a coffee tester’s ranking (best, worst, etc.) of four brands of coffee for a panel of 10 testers.
+
+These data can be classified into three types: Attribute, Nominal and Ordinal.  
+
+- Attribute Data: Also known as dichotomous data. These data has only two categories. Example: yes/no, male/female.
+- Nominal Data: These data have several unordered categories. Example: type of an insurance policy (motor, medical, fire, burglary, life insurance policies).
+- Ordinal or Ranked Data: These data have several ordered categories. Example: Questionnaire response such as Strongly Agree ......... Strongly Disagree to questions like: I am the best student in my class, My classmates are very co-operative, I live in the best hostel, Muscle response (none, partial, complete), Tree vigor (Healthy, sick, dead), Income  (less than kSh9999, KSh10,000-KSh19,999, KSh20,000-KSh49,999, Greater than KSh50,000)
+
+- Remark:  
+In economics, data is also often categorized by how it relates to time.
+
+ - Cross-sectional data.  
+In cross-sectional data, all observations come from the same point in time. The observations typically correspond to individuals or groups like states or countries. For instance, a survey of Americans on who they support in the upcoming presidential election is cross-sectional data. So is a data set with the homicide rate for each state in a single year.
+ - Longitudinal or time-series data.  
+In longitudinal or time-series data, each data point corresponds to a particular point in time – usually for a single individual or group. For instance, if you recorded your income every day for a year, that would give me a longitudinal data set. The GDP of the U.S. from 1945 to the present is also a longitudinal data set. 
+ - Panel data.  
+Panel data is both cross-sectional and longitudinal. It involves getting cross-sectional data for many time periods (or, alternatively, time-series data for many different individuals or groups). For instance, if you recorded the income for each one of your classmates every year for the next 20 years, that would be a panel data set.
+One way to think of this is in terms of dimensions. Both cross-sectional and time-series data are one-dimensional; panel data is two-dimensional.
+
+---
+
+### Data Sources and Collection Tools
+
+#### Data Collection
+
+
+```{r data-collection-diagram, echo=FALSE, fig.cap="Data Collection Methods"}
+# Install DiagrammeR if not already installed
+if (!requireNamespace("DiagrammeR", quietly = TRUE)) install.packages("DiagrammeR")
+library(DiagrammeR)
+
+grViz("
+digraph data_collection {
+  graph [layout = dot, rankdir = TB, fontname = 'Arial']
+  node  [shape = box, style = rounded, fontname = 'Arial', fontsize = 11,
+         margin = '0.2,0.1']
+  edge  [arrowhead = normal, arrowsize = 0.7]
+
+  A [label = 'Data Collection Methods', style = 'rounded,bold']
+
+  B [label = 'Experimental']
+  C [label = 'Non-Experimental']
+
+  D [label = 'Lab Experiment']
+  E [label = 'Field Experiment']
+  F [label = 'Simulation']
+
+  G [label = 'Non-Experimental']
+  H [label = 'Library']
+
+  I [label = 'Census']
+  J [label = 'Sample Survey']
+  K [label = 'Case Study']
+  L [label = 'Field Study']
+
+  A -> B
+  A -> C
+  B -> D
+  B -> E
+  B -> F
+  C -> G
+  C -> H
+  G -> I
+  G -> J
+  G -> K
+  G -> L
+}
+")
+```
+
+N/B: In Experimental methods, the researcher has to control the independent variables while in Non-Experimental methods there is no control.
+
+#### Sources of Data
+There are two main sources of data collection techniques: Primary and Secondary sources. There is also a third source known as internal data.
+
+**Primary Data**
+
+Primary data are measurements observed and recorded as part of an original study. Data is primary if it has been collected by the same person or entity that is using it.  It has not yet been published, is more reliable, authentic and objective. It has not been changed or altered. The work of collecting original data is usually limited by time, money, and manpower available for the study.  
+There are two basic methods of obtaining primary data, namely:
+
+- Surveys – most commonly used method in social sciences, management, psychology etc.
+- Questionnaire – commonly used in survey-asking people questions (Questioning) A formal list of such questions either open or closed ended questions for which the respondent gives answers. May be conducted through telephone, mail, live, electronic mail or fax etc.
+- Direct Observation - When data are collected by observation, the investigator asks no questions and may let the one being observed or may not let him know he’s being observed. 
+- Interviews– face to face with the respondent. Is slow, expensive and may take away from their working hours but allows in depth and follow-up questioning. 
+- Experiments – subjects are divided into treatment groups and control groups to measure the difference between them after some kind of treatment is given to the former group.  This is very common in medical testing.  
+
+**Secondary Data**
+
+Data which has been already collected by and available from other sources. This is primary data from another purpose for our purpose. Secondary data can be obtained from journals, reports, government publications, publications of research organizations, trade and professional bodies, compilations from computerized data bases and information systems, magazines, newspapers, internet, stories told by people etc. This is also referred to as Data mining(data mining (sometimes called data or knowledge discovery) is the process of analyzing data from different perspectives and summarizing it into useful information - information that can be used to increase revenue, cuts costs, or both).
+N/B Information from the Census, Bureau of Labor Statistics, Dept. of Commerce, etc., is secondary.  Well, that’s true if you use it.  If they (that is, employees of the Census Bureau) use it, it’s primary.
+
+**Internal Data**
+
+Internal data refer to the measurements that are the by-product of routine business record keeping like accounting, finance, production, personnel, quality control, sales, etc.
+
+---
+
+ **Exercise 1.1**
+ 
+a. Describe meaning of each of the following terms:
+
+    - Statistics.
+    - Data
+    - Frequency distribution
+b. Discuss four functions of statistics.
+c. What are the major limitations of Statistics? Explain with suitable examples.
+d. Distinguish between the following terms as used in statistics:
+
+    - Descriptive and inferential statistics.
+    - Target population and sample.
+    - Census and sample survey.
+    - Nominal and interval measurement.
+    - Quantitative Data and Qualitative Data.
+e. Explain the two main sources of data.
+f. Categorize these measurements according to their level:
+
+    - Students performance: Distinction, Pass, Fail.		
+    - Annual net income for Afya Insurance in 2012.		
+    - Names of insurance products.	
+    - Religious preference of tourists.
+    - Room temperature measured in Kelvin scale.		
+    - The length of time spent in a restaurant.
+    - The rank of an army officer.
+    - The type of a vehicle driven by the president.
+    - The mass of a pig.
+g. State which of the following variables are discrete and which are continuous:
+
+    - Height of a person.
+    - Number of employees in ABC bank.
+    - Temperature on a certain day.
+    - Age of a building.
+    - Length of a train journey.
+    - Time taken to complete a project.
+    - Volume of water in a container.
+    - Number of children in a family.
+h. Classify the following examples of data as nominal, ordinal, interval or ratio giving reasons for each:
+
+    - The species of trees growing in a farm.
+    - The grades of students at the end of semester exams.
+    - The financial stability of banks in Kenya.
+    - The number of years of service of all employees in Karatina University.
+    - Favorite rainbow colours among a sample of 50 pupils in ABC school.
+    - The number of defective bulbs produced by XYZ factory between January and May 2000.
+i. List the various methods of data collection techniques you know of.
+j. Sometimes people, knowingly or unknowingly, use statistical data wrongly. State any two forms of misuse of statistical data.
+k. Classify the different measurement systems into one of the four types of scales:
+
+  - The distance around your forehead measured with a tape measure as a measure of your intelligence.  							
+  - A response to the statement "My dress my choice" where "Strongly Disagree" = 1, "Disagree" = 2, "No Opinion" = 3, "Agree" = 4, and "Strongly Agree" = 5, as a measure of women’s attitude toward manner of dressing. 	
+**Research Question:**  Write down the advantages of data classification.
+
+---
+
+## Data Presentation
+
+### Objectives
+
+By the end of the lecture the learner should be able to:
+
+- Summarize a set of data using a table or frequency distribution table.
+- Display data graphically using bar graphs, histogram, frequency polygon, frequency curve, and Ogive curve and interpret the graphs.
+
+### Introduction
+
+When data is collected (*raw data*), it is usually not organized. After the data have been collected, the next step is to present them in some suitable form. Proper presentation is necessary because statistical data in raw form are difficult to comprehend.
+
+Often, the first stage in presenting data is to produce a **table**.
+
+- If the data are few, they can be easily presented and understood.
+- If the number of figures is large, proper classification is essential for analysis.
+
+Next is to represent the data **diagrammatically or graphically**.
+
+A *statistical graph* is a tool that helps you learn about the shape or distribution of a sample or population. Graphs often communicate information more effectively than large sets of numbers.
+
+Common graphs include:
+
+- Dot plot
+- Bar graph
+- Histogram
+- Stem-and-leaf plot
+- Frequency curve
+- Frequency polygon
+- Pie chart
+- Box plot
+- Cumulative frequency (Ogive) curve
+
+In this course, we will look at:
+
+- Histogram
+- Line graphs
+- Bar graphs
+- Frequency polygons
+- Cumulative frequency (Ogive) curve
+
+---
+
+### Frequency Distribution
+
+One method of data presentation is the **frequency distribution**.
+
+The *frequency* of a value is the number of times that value appears. When observations are few and values repeat, we can arrange them in a table showing each value and its frequency. This is called a **frequency table**.
+
+**A frequency table/distribution** is a listing of possible values for a variable together with the number of observations (or relative frequencies) for each value.
+
+---
+
+#### Ungrouped Data
+
+Suppose we record some observations where some values occur once and others multiple times.
+
+- Recording numbers as they appear is tedious: this is **ungrouped (or raw) data**.
+- When the number of distinct values is small (discrete distribution), it is convenient to use an **ungrouped frequency distribution table**.
+
+---
+
+**Example 1.1: Ungrouped Frequency Distribution**
+
+The following set of data consists of exam scores for 25 students:
+
+3, 3, 6, 4, 5, 4, 10, 5, 29, 3, 5, 6, 10, 31, 4, 10, 3, 29, 5, 31, 29, 11, 31, 6, 10
+
+Construct an ungrouped frequency distribution table to represent this data set.
+
+**Solution: Steps of Construction of Ungrouped Frequency Distribution Table**
+
+1. Identify the smallest and the largest value in the data set and arrange all values in ascending (or descending) order.
+2. Tally the number of times each value appears in the data.
+3. Count the number of tallies of each value and record them as frequencies.
+
+- The smallest value is **3** and the largest is **31**.
+- Arranging the values in ascending order, we obtain:
+
+3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 10, 10, 10, 10, 11, 29, 29, 29, 31, 31, 31, 31
+
+- Next step is to construct the frequency distribution table.
+
+**Note:** If a tally reaches 5, we use `////` and not `/////`.
+
+**Ungrouped Frequency Distribution Table**
+
+| Scores (x) | Tallies | Frequency (f) |
+|------------|---------|---------------|
+| 3          | ///     | 3             |
+| 4          | ///     | 3             |
+| 5          | ////    | 4             |
+| 6          | ///     | 3             |
+| 10         | ////    | 4             |
+| 11         | /       | 1             |
+| 29         | ///     | 3             |
+| 31         | ////    | 4             |
+| **Total**  |         | **25**        |
+
+**R Code: Construction of Ungrouped Frequency Table**
+
+```{r ungrouped-freq}
+# Data
+scores <- c(3,3,6,4,5,4,10,5,29,3,5,6,10,31,4,10,3,29,5,31,29,11,31,6,10)
+
+# Frequency table
+freq_table <- table(scores)
+
+# Convert to data frame for nicer display
+freq_df <- as.data.frame(freq_table)
+colnames(freq_df) <- c("Scores (x)", "Frequency (f)")
+
+# Print table
+freq_df
+```
+
+---
+
+#### Categorical Frequency Distributions
+
+A **categorical frequency distribution** is used for data that can be placed into categories such as gender, religion, marital status, blood group, etc. These categories are mutually exclusive and collectively exhaustive.
+
+The categorical frequency distribution is used for data that can be placed in specific categories, such as nominal- or ordinal-level data. For example, data such as political affiliation, religious affiliation, blood group, tree species or major field of study would use categorical frequency distributions.
+
+---
+
+**Example 1.2: Categorical Frequency Distribution Table**
+
+A lecturer recorded the major field of study for 30 first-year students. The categories observed were Statistics, Mathematics, Computer Science, and Actuarial Science. The data collected are as follows:
+
+Statistics, Mathematics, Statistics, Computer Science, Actuarial Science, Statistics, Mathematics, Mathematics, Computer Science, Statistics, Actuarial Science, Statistics, Mathematics, Computer Science, Statistics, Mathematics, Actuarial Science, Computer Science, Statistics, Mathematics, Statistics, Actuarial Science, Computer Science, Mathematics, Statistics, Mathematics, Computer Science, Statistics, Actuarial Science, Statistics.
+
+Construct a categorical frequency distribution table for this data.
+
+**Solution**
+
+| Category          | Frequency |
+|-------------------|-----------|
+| Actuarial Science | 6         |
+| Computer Science  | 6         |
+| Mathematics       | 8         |
+| Statistics        | 10        |
+| **Total**         | **30**    |
+
+---
+
+### Grouped Frequency Distribution Tables (Classification According to Class-Intervals)
+
+If amount of data is large we put it into groups/categories/classes and determine number of units
+in each category (class frequency).
+
+A **grouped frequency distribution table** normally has columns which show the class intervals,
+class mid-points, class frequencies, and **cumulative frequencies**, the last of these being a
+running total of the frequencies themselves. There may also be a column of **tallied frequencies**,
+if the table is being constructed from the raw data without having first arranged the values in
+rank order.
+
+---
+
+#### Principles of Classification
+
+- For the purpose of further calculations in statistical work the **mid-point** of each class is
+  taken to represent that class.
+
+- There are two methods of classifying the data according to class-intervals, namely:
+
+    - **"Exclusive" method:** When the class-intervals are so fixed that the upper limit of one
+      class is the lower limit of the next class, it is known as the "Exclusive" method of
+      classification. It is clear that the "exclusive" method ensures continuity of data in as
+      much as the upper limit of one class is the lower limit of the next class.
+
+    - **"Inclusive" method:** Under the "Inclusive" method of classification, the upper limit of
+      one class is included in that class itself.
+
+- The number of classes denoted by $k$ falls between 5 and 15. (However, there is no rigidity
+  about it. The classes can be more than 15 depending upon the total number of observations in
+  the data and the details required). Further, the precise number of classes to be used for a
+  given variable may depend upon personal judgment and other considerations such as the details
+  required, the ease of calculation of further statistical work, etc.
+
+- The classes should be **mutually exclusive**.
+
+- The starting point, i.e., the lower limit of the first class, should either be zero or 5 or
+  multiples of 5. For example, if the lowest value of the data is 63 and we have taken a
+  class-interval of 10, then the first class should be 60 – 70, instead of 63 – 73.
+
+- To ensure continuity and to get correct class-interval we should adopt the "exclusive" method
+  of classification. However, where the "inclusive" method has been adopted it is necessary to
+  make an adjustment to determine the correct class-interval and to have continuity. See steps in
+  the Construction of a Grouped Frequency Distribution below. The adjustment consists of finding
+  the difference between the lower limit of the second class and the upper limit of the first
+  class, dividing the difference by two, subtracting the value so obtained from all lower limits
+  and adding the value to all upper limits. This can be expressed in the formula as follows:
+
+$$\text{Correction factor} = \frac{(\text{Lower limit of 2nd class}) - (\text{Upper limit of 1st class})}{2}$$
+
+- Whenever possible all classes should be of the **same size**.
+
+---
+
+**Steps in the Construction of a Grouped Frequency Distribution**
+
+**Step 1.** Select the number of classes $k$. One such guideline is to pick $k$ such that
+$2^k \geq n$, so that if the sample size $n = 20$, $k = 5$ because $2^5 = 32 > n$ and if
+$n = 80$, $k = 7$ because $2^7 = 128 > n$. To be more specific, we can solve for $k$ to get:
+
+$$k > \frac{\log n}{\log 2}$$
+
+Alternatively, Sturges suggested the following formula for determining the approximate number of
+classes:
+
+$$k = 1 + 3.322 \log(n)$$
+
+where $k$ = the approximate number of classes, $n$ = total number of observations and
+$\log$ = the ordinary logarithm to the base of 10.
+
+**Step 2.** Find the largest and smallest values and compute the working range denoted by $R$.
+
+$$R = \text{Maximum Value} - \text{Minimum Value}$$
+
+(or Desired Lower Class Limit (LCL) of starting class). LCL of the starting class is normally
+the minimum value in the data or any other value slightly less than the minimum value.
+
+**Step 3.** Identify the smallest unit of measurement ($u$) used in the data collection. The
+value of $u$ can be inferred from the given data or the given starting value (usually tens (10),
+ones (1), tenth (0.1) and hundredth (0.01) etc.
+
+$$u = (\text{LCL of 2nd class}) - (\text{UCL of 1st class})$$
+
+Estimate the class interval ($i$) (sometimes denoted by $c$) as:
+
+$$\text{Class width } CW(i) = \frac{\text{Largest data value} - \text{Smallest data value}}{\text{Desirable number of classes}}$$
+
+or
+
+$$i = \text{Round up} \left(\frac{R}{k}\right) \text{ to the nearest } u$$
+
+> **Note:** You must Round Up, not Round Off. For $u = 1$, Round Up (5.2) = 6 not 5 and for
+> $u = 0.1$ Round Up is exact (no remainder when divided by $u$) — add one to the number of
+> classes. Or simply put, round $i$ to the next highest whole number so that the classes cover
+> the whole data.
+
+**Step 4.** The starting value used in calculation of $R$ above is picked as the lower class
+limit (LCL) of the first class. Add the class interval $i$ to this LCL successively to get the
+rest of the lower class limits.
+
+**Step 5.** Find the Upper Class Limit (UCL) of the first class by subtracting $u$ from the LCL
+of the second class. Then continue to add the class interval $i$ to this UCL to find the rest
+of the upper limits.
+
+**Step 6.** If necessary, find the class boundaries (CB) for each class as follows:
+
+- Lower Class Boundary: $LCB = LCL - 0.5u \quad (0.5u = \text{the correction factor})$
+- Upper Class Boundary: $UCB = UCL + 0.5u$
+
+**Step 7.** Tally the number of observations falling in each class and find the frequencies.
+
+> **Note:** A value $x$ falls into a class $LCL - UCL$ only if $LCB \leq x < UCB$. That is,
+> $x$ can be equal to $LCB$ but not $UCB$ of that class.
+
+**Step 8.** Record the number of tallies in each category as the class frequencies.
+
+**Step 9.** Compute the cumulative frequencies to confirm that the last value of the column is
+equal to the sum of the frequencies.
+
+**Step 10.** Compute the midpoints of each class using the class boundaries.
+
+---
+
+**Example 1.3**
+
+The idea of grouped data can also be illustrated by considering the following raw dataset:
+
+**Time taken (in seconds) by a group of students to answer a simple math question**
+
+```{r example1-3-data, echo=FALSE}
+library(kableExtra)
+raw_data <- matrix(c(20,25,24,33,13,16,21,17,11,34,
+                     26, 8,19,31,11,14,15,21,18,17),
+                   nrow = 2, byrow = TRUE)
+kable(raw_data, col.names = NULL,
+      caption = "Raw data: time taken (seconds) by students") |>
+  kable_styling(bootstrap_options = c("bordered","condensed"),
+                full_width = FALSE)
+```
+
+The above data can be organized into a frequency distribution (or a grouped data) in several
+ways. One method is to use intervals as a basis.
+
+The smallest value in the above data is 8 and the largest is 34. The interval from 8 to 34 is
+broken up into smaller subintervals (called **class intervals**). Suppose we want to have number
+of classes as:
+
+$$k = 1 + 3.322 \log(20) = 5.322 \approx 6$$
+
+Then the class width is obtained as:
+
+$$CW = \frac{34 - 8}{6} = 4.33 \implies \text{rounding to the next whole number, } CW = i = 5$$
+
+The results are tabulated as a frequency distribution as follows:
+
+**Frequency distribution of the time taken (in seconds) by the group of students to answer a
+simple math question:**
+
+**Using Exclusive Method of Classification**
+
+```{r exclusive-table, echo=FALSE}
+exclusive_df <- data.frame(
+  `Time taken (seconds)` = c("5-10","10-15","15-20","20-25","25-30","30-35"),
+  `Interval notation`    = c("5 ≤ t < 10","10 ≤ t < 15","15 ≤ t < 20",
+                              "20 ≤ t < 25","25 ≤ t < 30","30 ≤ t < 35"),
+  Tallies                = c("/","////","/////" ,"////","//","///"),
+  Frequency              = c(1, 4, 6, 4, 2, 3),
+  `Cumulative frequencies` = c(1, 5, 11, 15, 17, 20),
+  `Class mid-point`      = c(7.5, 12.5, 17.5, 22.5, 27.5, 32.5),
+  check.names = FALSE
+)
+kable(exclusive_df,
+      caption = "Exclusive method of classification") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = TRUE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+**Using the Inclusive Method of Classification**
+
+```{r inclusive-table, echo=FALSE}
+inclusive_df <- data.frame(
+  `Time taken (seconds)` = c("5-9","10-14","15-19","20-24","25-29","30-34"),
+  Tallies                = c("/","////","/////" ,"////","//","///"),
+  Frequency              = c(1, 4, 6, 4, 2, 3),
+  `Cumulative frequencies` = c(1, 5, 11, 15, 17, 20),
+  `Class mid-point`      = c(7.5, 12.5, 17.5, 22.5, 27.5, 32.5),
+  `Class boundaries`     = c("4.5-9.5","9.5-14.5","14.5-19.5",
+                              "19.5-24.5","24.5-29.5","29.5-34.5"),
+  check.names = FALSE
+)
+kable(inclusive_df,
+      caption = "Inclusive method of classification") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = TRUE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+> **Note:** To ensure continuity, the class limits are adjusted to obtain the true class limits
+> (class boundaries) as shown earlier in the principles of classification number (iv). This is
+> indicated in the last column.
+
+---
+
+**Example 1.4**
+
+Let the marks of 50 students of a class be:
+
+```{r example1-4-data, echo=FALSE}
+marks_raw <- matrix(c(46,58,54,52,55,59,52,62,65,67,
+                      64,63,77,78,92, 6, 7,12,18,16,
+                       3,23,25,25,27,81,88,24,29,22,
+                      34,33,30,37,36,42,48,28,22,28,
+                      17,13,70,37,32,36,41,40,43,44),
+                    nrow = 5, byrow = TRUE)
+kable(marks_raw, col.names = NULL,
+      caption = "Marks of 50 students") %>%
+  kable_styling(bootstrap_options = c("bordered","condensed"),
+                full_width = FALSE)
+```
+
+We can arrange them as follows:
+
+```{r example1-4-freq, echo=FALSE}
+freq1 <- data.frame(Marks = c("0 – 10","10 – 20","20 – 30","30 – 40","40 – 50"),
+                    Frequency = c(3, 5, 10, 8, 7))
+freq2 <- data.frame(Marks = c("50 – 60","60 – 70","70 – 80","80 – 90","90 – 100"),
+                    Frequency = c(6, 5, 3, 2, 1))
+combined <- cbind(freq1, freq2)
+kable(combined,
+      col.names = c("Marks","Frequency","Marks","Frequency"),
+      caption = "Grouped frequency distribution of marks of 50 students") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = FALSE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") %>%
+  add_header_above(c(" " = 2, " " = 2)) %>%
+  row_spec(5, extra_css = "border-bottom: 2px solid #1f618d;")
+```
+
+Data organized and summarized as in the above frequency distribution is called **grouped data**.
+
+> **Remark:**
+>
+> Consider the following:
+>
+> | Mass (Kg) | Number of students |
+> |-----------|-------------------|
+> | 60–62     | 5                 |
+> | 63–65     | 18                |
+> | 66–68     | 42                |
+> | 69–71     | 27                |
+> | 72–74     | 8                 |
+> | 75–       | 0                 |
+>
+> 66–68 is referred to as the **class interval** where 66 is the **lower class limit** while 68
+> is the **upper class limit**. 75– is the **open class interval**.
+>
+> If measurements are taken to the nearest Kg then for example 65.5–68.5 are the true class
+> limits/boundaries.
+>
+> Mid-point between class limits is called the **class mid-mark/midpoint**. It is used for all
+> mathematical analysis of frequency distribution.
+>
+> $$\text{Mid-point of a class} = \frac{\text{Upper class boundary} + \text{Lower class boundary}}{2}$$
+>
+> **Note:** Relative Frequencies may also be calculated by dividing the number of cases in each
+> category by the total number of students (100) and multiplying by 100. For example in the
+> class 66–68:
+> $$\text{Relative frequency} = \frac{42}{100} \times 100 = 42$$
+>
+> Relative frequencies are most useful where the class size is different.
+
+---
+
+**Self-Test Question**
+
+The list below shows One-way Commuting Distances (in Km) for 60 workers in Nairobi city.
+
+```{r self-test-data, echo=FALSE}
+commute <- matrix(c(13, 7,12, 6,34,14,47,25,45, 2,
+                    13,26,10, 8, 1,14,41,10, 3,21,
+                     8,13,28,24,16,19, 4, 7,36,37,
+                    20,15,16,15,17,31,17, 3,11,46,
+                    24, 8,40,17,18,12,27,16, 4,14,
+                    23, 9,29,12, 2, 6,12,18, 9,16),
+                  nrow = 6, byrow = TRUE)
+kable(commute, col.names = NULL,
+      caption = "One-way commuting distances (km) for 60 Nairobi workers") %>%
+  kable_styling(bootstrap_options = c("bordered","condensed"),
+                full_width = FALSE)
+```
+
+a. Construct a grouped frequency distribution table and include the cumulative frequencies and
+   class mid-point using:
+    i. Exclusive method of classification with the class boundaries ending with either 0 or 5.
+    ii. Inclusive method of classification.
+b. Find the class boundaries in (b) to ensure continuity.
+
+---
+
+## Diagrammatic Representation of Data
+
+### Histogram
+
+A histogram consists of a set of adjoining rectangles such that their bases are on the x-axis
+with centers at class marks and length equals class interval size. The horizontal axis is labeled
+with what the data represents (for instance, distance from campus to your hostel). The vertical
+axis is labeled either **frequency** or **relative frequency** (or percent frequency or
+probability). The graph will have the same shape with either label. The histogram can give you
+the shape of the data, the center, and the spread of the data.
+
+The relative frequency is equal to the frequency for an observed value of the data divided by
+the total number of data values in the sample or population. If:
+
+- $f$ = frequency
+- $n$ = total number of data values (or the sum of the individual frequencies), and
+- $RF$ = relative frequency,
+
+Then:
+
+$$RF = \frac{\text{frequency}}{\text{total frequencies}} = \frac{f}{n}$$
+
+The areas of the rectangles are proportional to the class frequencies. If class intervals have
+**equal sizes** the histogram is obtained by plotting the frequencies against the true class
+limits (class boundaries) such that the heights of rectangles are proportional to class
+frequencies.
+
+But if class intervals are **not equal**, then plot the frequency density (or relative
+frequencies) against the class boundaries as illustrated in Example 1.4 (ii).
+
+$$\text{Frequency density} = \frac{\text{frequency } (f)}{\text{class width } (i)}$$
+
+To construct a histogram, first decide how many bars or intervals, also called classes, represent
+the data. This usually equals the number of intervals/classes in the data set. Choose a starting
+point to be the lower class boundary of a class lower than the first interval in the data set.
+For instance if the class intervals were: 10–15, 15–20, ... then the first interval will be 5–10
+with a height/frequency zero.
+
+---
+
+**Example 1.4 (i): Histogram – Equal Class Widths**
+
+Represent the following data by a histogram.
+
+```{r hist-equal-data, echo=FALSE}
+hist_eq <- data.frame(
+  Marks     = c("0–10","10–20","20–30","30–40","40–50",
+                "50–60","60–70","70–80","80–90","90–100"),
+  Frequency = c(5, 11, 19, 21, 16, 10, 8, 6, 3, 1)
+)
+h1 <- hist_eq[1:5, ]
+h2 <- hist_eq[6:10, ]
+
+kable(cbind(h1, h2),
+      col.names = c("Marks","Frequency","Marks","Frequency"),
+      caption = "Frequency distribution – equal class widths") |>
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  add_footnote("Total: 100", notation = "none")
+```
+
+The class intervals are of equal size and class boundaries are given since the exclusive method
+of data classification has been used.
+
+```{r hist-equal-plot, echo=TRUE, fig.cap="Histogram of student marks (equal class widths)"}
+marks_mid  <- seq(5, 95, by = 10)
+marks_freq <- c(5, 11, 19, 21, 16, 10, 8, 6, 3, 1)
+
+hist_df <- data.frame(
+  lower = seq(0, 90, by = 10),
+  upper = seq(10, 100, by = 10),
+  freq  = marks_freq
+)
+
+ggplot(hist_df, aes(xmin = lower, xmax = upper, ymin = 0, ymax = freq)) +
+  geom_rect(fill = "#2e86c1", color = "white", linewidth = 0.5) +
+  scale_x_continuous(breaks = seq(0, 100, by = 10),
+                     labels = seq(0, 100, by = 10)) +
+  labs(title = "Histogram of student marks",
+       x     = "Marks",
+       y     = "Frequency") +
+  theme_classic(base_size = 13) +
+  theme(plot.title = element_text(hjust = 0.5, color = "#1a5276", face = "bold"))
+```
+
+---
+
+**Example 1.4 (ii): Histogram – Unequal Class Widths (Frequency Density)**
+
+Construct a histogram to represent the following data set:
+
+```{r hist-unequal-data, echo=FALSE}
+unequal_df <- data.frame(
+  `X (Class limits)`   = c("15-19","20-29","30-34","35-39","40-54","55-59"),
+  F                    = c(5, 8, 22, 35, 20, 10),
+  `Class boundaries`   = c("14.5-19.5","19.5-29.5","29.5-34.5",
+                            "34.5-39.5","39.5-54.5","54.5-59.5"),
+  `Relative frequency` = c("5/100","8/100","22/100","35/100","20/100","10/100"),
+  `i = class size`     = c(5, 10, 5, 5, 15, 5),
+  `Frequency density (fd = f/i)` = c("5/5","8/10","22/5","35/5","20/15","10/5"),
+  check.names = FALSE
+)
+kable(unequal_df,
+      caption = "Frequency distribution – unequal class widths") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = TRUE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+The class sizes are unequal and therefore to construct the histogram we use frequency density
+for each class calculated as $fd = \frac{f}{i}$.
+
+Class limits are given hence to obtain class boundaries (true class limits), we adjust the limits
+by using the correction factor.
+
+```{r hist-unequal-plot, echo=TRUE, fig.cap="Histogram of unequal class widths (frequency density)"}
+unequal_hist <- data.frame(
+  lower = c(14.5, 19.5, 29.5, 34.5, 39.5, 54.5),
+  upper = c(19.5, 29.5, 34.5, 39.5, 54.5, 59.5),
+  freq  = c(5, 8, 22, 35, 20, 10),
+  width = c(5, 10, 5, 5, 15, 5)
+)
+unequal_hist$fd <- unequal_hist$freq / unequal_hist$width
+
+ggplot(unequal_hist,
+       aes(xmin = lower, xmax = upper, ymin = 0, ymax = fd)) +
+  geom_rect(fill = "#117a65", color = "white", linewidth = 0.5) +
+  scale_x_continuous(breaks = c(14.5, 19.5, 29.5, 34.5, 39.5, 54.5, 59.5)) +
+  labs(title = "Histogram using frequency density (unequal class widths)",
+       x     = "Class boundaries",
+       y     = "Frequency density (f/i)") +
+  theme_classic(base_size = 13) +
+  theme(plot.title    = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        axis.text.x   = element_text(angle = 45, hjust = 1))
+```
+
+> **Exercise:** Suppose the classes were of equal widths, then construct a histogram (DIY).
+>
+> | Class limits | 15–19 | 20–24 | 25–29 | 30–34 | 35–39 | 40–44 |
+> |--------------|-------|-------|-------|-------|-------|-------|
+> | Frequency    | 1     | 4     | 22    | 35    | 20    | 8     |
+
+---
+
+### Frequency Polygon
+
+A **frequency polygon** is a graphical form of representation of data. It is used to depict the
+shape of the data and to depict trends. It is usually drawn with the help of a histogram but can
+be drawn without it as well. If a histogram is already drawn and the midpoint of adjacent
+rectangles joined by straight lines we will obtain frequency polygons.
+
+**Steps to Draw a Frequency Polygon**
+
+1. Mark the class intervals for each class on the horizontal axis. We will plot the frequency on
+   the vertical axis.
+2. Calculate the **class mark** for each class interval. The formula for class mark is:
+
+$$\text{Class mark} = \frac{\text{Upper limit} + \text{Lower limit}}{2}$$
+
+3. Mark all the class marks on the horizontal axis. It is also known as the mid-value of every
+   class.
+4. Corresponding to each class mark, plot the frequency as given to you. The height always
+   depicts the frequency. Make sure that the frequency is plotted against the class mark and not
+   the upper or lower limit of any class.
+5. Join all the plotted points using a line segment. The curve obtained will be kinked.
+6. This resulting curve is called the **frequency polygon**.
+
+> **N/B:** It can be drawn without rectangles.
+
+---
+
+**Example: Frequency Polygon of Student Marks**
+
+Plot the frequency polygon of the marks of students given in (a) above.
+
+**Solution:**
+
+```{r freq-polygon-data, echo=FALSE}
+fp_df <- data.frame(
+  Marks     = c("–","0–10","10–20","20–30","30–40","40–50",
+                "50–60","60–70","70–80","80–90","90–100","–"),
+  Frequency = c(0, 5, 11, 19, 21, 16, 10, 8, 6, 3, 1, 0),
+  Midpoint  = c(0, 5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 105)
+)
+kable(fp_df,
+      caption = "Midpoints and frequencies for frequency polygon") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = FALSE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+> **Note:** It is customary to add the extensions PQ and RS to the next lower and next higher
+> midpoints which have corresponding class frequencies of zero.
+
+```{r freq-polygon-plot, echo=TRUE, fig.cap="Frequency polygon of student marks"}
+fp_data <- data.frame(
+  midpoint  = c(0, 5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 105),
+  frequency = c(0, 5, 11, 19, 21, 16, 10,  8,  6,  3,  1,   0)
+)
+
+# Underlying histogram bars
+hist_bars <- data.frame(
+  lower = seq(0, 90, by = 10),
+  upper = seq(10, 100, by = 10),
+  freq  = c(5, 11, 19, 21, 16, 10, 8, 6, 3, 1)
+)
+
+ggplot() +
+  geom_rect(data = hist_bars,
+            aes(xmin = lower, xmax = upper, ymin = 0, ymax = freq),
+            fill = "#aed6f1", color = "white", linewidth = 0.4, alpha = 0.6) +
+  geom_line(data = fp_data,
+            aes(x = midpoint, y = frequency),
+            color = "#1a5276", linewidth = 1.2) +
+  geom_point(data = fp_data,
+             aes(x = midpoint, y = frequency),
+             color = "#e74c3c", size = 2.5) +
+  scale_x_continuous(breaks = seq(0, 105, by = 10)) +
+  labs(title = "Frequency polygon of student marks",
+       x     = "Marks (midpoints)",
+       y     = "Frequency") +
+  theme_classic(base_size = 13) +
+  theme(plot.title = element_text(hjust = 0.5, color = "#1a5276", face = "bold"))
+```
+
+---
+
+**Plot the Frequency Polygon – Given Data Set**
+
+```{r fp2-data, echo=FALSE}
+fp2_df <- data.frame(
+  `Class limits`    = c("15-19","20-24","25-29","30-34","35-39","40-44"),
+  Frequency         = c(1, 4, 22, 35, 20, 8),
+  `Class mid-point` = c(17, 22, 27, 32, 37, 42),
+  check.names = FALSE
+)
+kable(fp2_df,
+      caption = "Data for second frequency polygon") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = FALSE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+```{r fp2-plot, echo=TRUE, fig.cap="Frequency polygon – second data set"}
+fp2_data <- data.frame(
+  midpoint  = c(12, 17, 22, 27, 32, 37, 42, 47),
+  frequency = c( 0,  1,  4, 22, 35, 20,  8,  0)
+)
+
+hist2_bars <- data.frame(
+  lower = c(14.5, 19.5, 24.5, 29.5, 34.5, 39.5),
+  upper = c(19.5, 24.5, 29.5, 34.5, 39.5, 44.5),
+  freq  = c(1, 4, 22, 35, 20, 8)
+)
+
+ggplot() +
+  geom_rect(data = hist2_bars,
+            aes(xmin = lower, xmax = upper, ymin = 0, ymax = freq),
+            fill = "#a9dfbf", color = "white", linewidth = 0.4, alpha = 0.6) +
+  geom_line(data = fp2_data,
+            aes(x = midpoint, y = frequency),
+            color = "#117a65", linewidth = 1.2) +
+  geom_point(data = fp2_data,
+             aes(x = midpoint, y = frequency),
+             color = "#e74c3c", size = 2.5) +
+  scale_x_continuous(breaks = c(12, 17, 22, 27, 32, 37, 42, 47)) +
+  labs(title = "Frequency polygon",
+       x     = "Class mid-points",
+       y     = "Frequency") +
+  theme_classic(base_size = 13) +
+  theme(plot.title = element_text(hjust = 0.5, color = "#1a5276", face = "bold"))
+```
+
+---
+
+### Bar Graph (Chart)
+
+The height of the bar is proportional to the frequency of the variate but the thickness of the
+bar is insignificant. A bar chart comprises a number of spaced rectangles and thus do not suggest
+continuity and which generally have their major axes vertical. They can be used to represent a
+large variety of statistical data. The bar chart is appropriate for displaying **discrete data**
+with only a few categories.
+
+---
+
+**(a) Simple Bar Chart**
+
+**Example 1.5 (i)– Birth Rates by Country**
+
+The following table gives the birth rate per thousand of different countries over a certain
+period of time.
+
+```{r birth-rate-table, echo=FALSE}
+birth_df <- data.frame(
+  Country    = c("Kenya","India","China","Uganda","U.K.","Sweden"),
+  `Birth rate` = c(30, 33, 40, 29, 20, 15),
+  check.names = FALSE
+)
+kable(birth_df,
+      caption = "Birth rate per thousand by country") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = FALSE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+Represent the above data by a suitable diagram.
+
+**Solution:** The appropriate diagram for this data is a simple bar diagram.
+
+```{r simple-bar-chart, echo=TRUE, fig.cap="Simple bar chart of birth rates by country"}
+birth_rate <- data.frame(
+  Country    = c("Kenya","India","China","Uganda","U.K.","Sweden"),
+  Birth_Rate = c(30, 33, 40, 29, 20, 15)
+)
+birth_rate$Country <- factor(birth_rate$Country,
+                             levels = birth_rate$Country[order(birth_rate$Birth_Rate)])
+
+ggplot(birth_rate, aes(x = Country, y = Birth_Rate)) +
+  geom_bar(stat = "identity", fill = "#2e86c1", width = 0.6) +
+  geom_text(aes(label = Birth_Rate), vjust = -0.4, size = 4, color = "#1a5276") +
+  labs(title = "Birth rate per thousand by country",
+       x     = "Country",
+       y     = "Birth Rate (per thousand)") +
+  theme_classic(base_size = 13) +
+  theme(plot.title = element_text(hjust = 0.5, color = "#1a5276", face = "bold"))
+```
+
+Comparing the size of the bars, you can easily see that **China** has the highest birth rate
+while **Sweden** has the lowest.
+
+---
+
+**Example 1.5 (ii): Bacterial Meningitis Cases**
+
+Consider data relating to the number of patients diagnosed with Bacterial meningitis in a
+hospital each year.
+
+```{r meningitis-table, echo=FALSE}
+mening_df <- data.frame(
+  Year               = c(2001, 2002, 2003, 2004, 2005),
+  `No. of patients`  = c(141, 225, 205, 108, 192),
+  check.names = FALSE
+)
+kable(mening_df,
+      caption = "Bacterial meningitis patients per year") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = FALSE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+This data can be represented by the bar chart as shown below.
+
+**The number of patients diagnosed with Bacterial meningitis in a hospital during the period
+2001 – 2005.**
+
+```{r meningitis-bar, echo=TRUE, fig.cap="Bacterial meningitis cases 2001–2005"}
+mening <- data.frame(
+  Year     = factor(2001:2005),
+  Patients = c(141, 225, 205, 108, 192)
+)
+
+ggplot(mening, aes(x = Year, y = Patients)) +
+  geom_bar(stat = "identity", fill = "#117a65", width = 0.6) +
+  geom_text(aes(label = Patients), vjust = -0.4, size = 4, color = "#117a65") +
+  labs(title = "Bacterial meningitis patients (2001–2005)",
+       x     = "Year",
+       y     = "Number of patients") +
+  theme_classic(base_size = 13) +
+  theme(plot.title = element_text(hjust = 0.5, color = "#1a5276", face = "bold"))
+```
+
+Notice that it is now easy to see that there are variations in the number of cases over this
+period of time.
+
+---
+
+**(b) Multiple Bar Chart**
+Bar charts often prove most useful if we have two (or more) sets of comparable data, and wish to
+compare and contrast them.
+
+**Example 1.6**
+
+Suppose that apart from the data relating to the number of patients diagnosed with Bacterial
+meningitis in a hospital each year, we also have the corresponding numbers for Malaria cases.
+
+```{r multiple-bar-table, echo=FALSE}
+multi_df <- data.frame(
+  Year                           = c(2001, 2002, 2003, 2004, 2005),
+  `Number of patients (Meningitis)` = c(141, 225, 205, 108, 192),
+  `Number of patients (Malaria)`    = c(321, 251, 123, 547, 148),
+  check.names = FALSE
+)
+kable(multi_df,
+      caption = "Meningitis and malaria patients per year") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = TRUE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+```{r multiple-bar-chart, echo=TRUE, fig.cap="Multiple bar chart: meningitis vs malaria cases 2001–2005"}
+multi_long <- data.frame(
+  Year     = rep(factor(2001:2005), 2),
+  Disease  = c(rep("Meningitis", 5), rep("Malaria", 5)),
+  Patients = c(141, 225, 205, 108, 192, 321, 251, 123, 547, 148)
+)
+
+ggplot(multi_long, aes(x = Year, y = Patients, fill = Disease)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +
+  geom_text(aes(label = Patients),
+            position = position_dodge(width = 0.7),
+            vjust = -0.4, size = 3.5) +
+  scale_fill_manual(values = c("Meningitis" = "#2e86c1",
+                               "Malaria"    = "#e67e22")) +
+  labs(title = "Meningitis vs malaria cases (2001–2005)",
+       x     = "Year",
+       y     = "Number of patients",
+       fill  = "Disease") +
+  theme_classic(base_size = 13) +
+  theme(plot.title   = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        legend.position = "top")
+```
+
+---
+
+**(c) Component Bar Charts (Sub-divided Bar Diagrams)**
+
+In this type of bar chart each bar is subdivided into two or more components.
+
+**Example 1.7**
+
+Suppose further that the data in the example above is grouped according to sex as follows:
+
+```{r component-bar-table, echo=FALSE}
+comp_df <- data.frame(
+  Year                          = c(2001, 2002, 2003, 2004, 2005),
+  `Number of Male patients`     = c(100, 125, 90, 20, 102),
+  `Number of Female patients`   = c(41, 100, 115, 88, 90),
+  `Total Patients`              = c(141, 225, 205, 108, 192),
+  check.names = FALSE
+)
+kable(comp_df,
+      caption = "Meningitis patients by sex (2001–2005)") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = TRUE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+This data can be represented in a component bar chart as shown in the figure below. Looking at
+this presentation, it is possible to discern two main features; firstly, we can see how the
+meningitis cases vary from year to year and secondly we can get a good idea of the make up of
+this total in terms of proportions of patients who are male or female.
+
+```{r component-bar-chart, echo=TRUE, fig.cap="Component bar chart: meningitis cases by sex 2001–2005"}
+comp_long <- data.frame(
+  Year     = rep(factor(2001:2005), 2),
+  Sex      = c(rep("Male", 5), rep("Female", 5)),
+  Patients = c(100, 125, 90, 20, 102, 41, 100, 115, 88, 90)
+)
+
+ggplot(comp_long, aes(x = Year, y = Patients, fill = Sex)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.6) +
+  geom_text(aes(label = Patients),
+            position = position_stack(vjust = 0.5),
+            color = "white", size = 4, fontface = "bold") +
+  scale_fill_manual(values = c("Male" = "#2e86c1", "Female" = "#e74c3c")) +
+  labs(title = "Component bar chart: meningitis patients by sex (2001–2005)",
+       x     = "Year",
+       y     = "Number of patients",
+       fill  = "Sex") +
+  theme_classic(base_size = 13) +
+  theme(plot.title      = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        legend.position = "top")
+```
+
+---
+
+### Pie Chart
+
+A pie chart presents data in the form of a circle. The slices represent absolute or relative
+proportions. A pie chart is formed by making a portion of the pie corresponding to each
+characteristic being displayed.
+
+**Example 1.8**
+
+A researcher studying the distribution of manufacturing costs in ABC Ltd found that 20% of the
+firm's unit cost is due to labour, 40% raw materials, 25% maintenance costs and 15% debt
+servicing. Present this information in a pie chart.
+
+**Fig 2: A pie chart representing the distribution of ABC Ltd per unit manufacturing cost
+during the year.**
+
+```{r pie-chart-table, echo=FALSE}
+pie_df <- data.frame(
+  Component   = c("Labour","Raw Materials","Maintenance Costs","Debt Servicing"),
+  Percentage  = c(20, 40, 25, 15)
+)
+kable(pie_df,
+      caption = "ABC Ltd manufacturing cost distribution") %>%
+  kable_styling(bootstrap_options = c("striped","hover","bordered","condensed"),
+                full_width = FALSE) %>%
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+```{r pie-chart, echo=TRUE, fig.cap="Pie chart: ABC Ltd manufacturing cost distribution"}
+pie_data <- data.frame(
+  Component  = c("Labour","Raw Materials","Maintenance costs","Debt servicing"),
+  Percentage = c(20, 40, 25, 15)
+)
+pie_data$Component <- factor(pie_data$Component,
+                             levels = pie_data$Component)
+pie_data$label     <- paste0(pie_data$Component, "\n", pie_data$Percentage, "%")
+
+ggplot(pie_data, aes(x = "", y = Percentage, fill = Component)) +
+  geom_bar(stat = "identity", width = 1, color = "white", linewidth = 0.7) +
+  coord_polar(theta = "y", start = 0) +
+  geom_text(aes(label = paste0(Percentage, "%")),
+            position = position_stack(vjust = 0.5),
+            color = "white", size = 5, fontface = "bold") +
+  scale_fill_manual(values = c("Labour"           = "#2e86c1",
+                               "Raw Materials"     = "#e67e22",
+                               "Maintenance costs" = "#117a65",
+                               "Debt servicing"    = "#8e44ad")) +
+  labs(title = "ABC Ltd: per unit manufacturing cost distribution",
+       fill  = "Component") +
+  theme_void(base_size = 13) +
+  theme(plot.title      = element_text(hjust = 0.5, color = "#1a5276",
+                                       face = "bold", size = 13),
+        legend.position = "right")
+```
+
+---
+
+## Graphical Representation of Data
+
+### Frequency Curve
+
+Consider for example the sales data for some company over a period of six years as shown in the
+table below:
+
+```{r sales-line-chart, echo=TRUE, fig.cap="Sales data for a company (2000–2004)"}
+sales_df2 <- data.frame(
+  Year  = c(2000, 2001, 2002, 2003, 2004),
+  Sales = c(420000, 370000, 360000, 380000, 540000)
+)
+
+ggplot(sales_df2, aes(x = Year, y = Sales)) +
+  geom_line(color = "#1a237e", linewidth = 1.2) +
+  geom_point(color = "#1a237e", size = 2) +
+  scale_x_continuous(breaks = c(2000, 2001, 2002, 2003, 2004),
+                     labels = c("2000","2001","2002","2003","2004")) +
+  scale_y_continuous(breaks = seq(0, 600000, by = 100000),
+                     labels = c("0","100,000","200,000","300,000",
+                                "400,000","500,000","600,000"),
+                     limits = c(0, 620000)) +
+  labs(title = NULL, x = NULL, y = NULL) +
+  theme_gray(base_size = 12) +
+  theme(
+    panel.background = element_rect(fill = "#c0c0c0", color = NA),
+    plot.background  = element_rect(fill = "white", color = "black", linewidth = 0.8),
+    panel.grid.major = element_line(color = "white", linewidth = 0.4),
+    panel.grid.minor = element_blank(),
+    axis.text        = element_text(color = "black", size = 10)
+  )
+```
+
+This original data can be presented in a graphical form as follows.
+
+---
+
+### Cumulative Frequency Curve (Ogive)
+
+**(i) "Less Than" Ogive**
+
+The cumulative frequency curve is obtained by first plotting the points with the **upper class
+boundaries** of each class interval on the X-axis and their corresponding cumulative frequencies
+on the Y-axis. The points are joined by means of a freehand smooth curve. The cumulative
+frequency curve is specifically called the **"Less than" Ogive curve**.
+
+---
+
+**Example 1.9**
+
+Plot the "Less than" ogive curve of the marks of students given in example 2 above.
+
+**Solution:**
+
+```{r less-than-ogive-table, echo=FALSE}
+lt_ogive <- data.frame(
+  Marks                      = c("0 – 10","10 – 20","20 – 30","30 – 40","40 – 50",
+                                  "50 – 60","60 – 70","70 – 80","80 – 90","90 – 100"),
+  Frequency                  = c(5, 11, 19, 21, 16, 10, 8, 6, 3, 1),
+  `Cumulative frequency`     = c(5, 16, 35, 56, 72, 82, 90, 96, 99, 100),
+  `Upper class boundary`     = c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+  check.names = FALSE
+)
+kable(lt_ogive,
+      caption = "Less than ogive – cumulative frequency table") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = TRUE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+```{r less-than-ogive-plot, echo=TRUE, fig.cap="'Less than' ogive curve of student marks"}
+lt_data <- data.frame(
+  upper_boundary = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+  cum_freq       = c(0,  5, 16, 35, 56, 72, 82, 90, 96, 99, 100)
+)
+
+ggplot(lt_data, aes(x = upper_boundary, y = cum_freq)) +
+  geom_line(color = "#1f618d", linewidth = 1.2) +
+  geom_point(color = "#e74c3c", size = 3) +
+  scale_x_continuous(breaks = seq(0, 100, by = 10)) +
+  scale_y_continuous(breaks = seq(0, 100, by = 10)) +
+  labs(title = '"Less than" Ogive Curve of Student Marks',
+       x     = "Upper Class Boundary (Marks)",
+       y     = "Cumulative Frequency") +
+  theme_classic(base_size = 13) +
+  theme(plot.title = element_text(hjust = 0.5, color = "#1a5276", face = "bold"))
+```
+
+> From the graph there are **"y"** students who scored less than **"x"** marks.
+
+---
+
+**(ii) "More Than" Ogive**
+
+If we plot the **"more than"** cumulative frequencies against the corresponding **lower class
+boundaries** and join the points by a smooth curve, we get a **"more than" ogive**.
+
+---
+
+**Example 1.10**
+
+Plot the "More than" ogive curve of the marks of students given in example 2 above.
+
+**Solution:**
+
+```{r more-than-ogive-table, echo=FALSE}
+mt_ogive <- data.frame(
+  Marks                           = c("0 – 10","10 – 20","20 – 30","30 – 40","40 – 50",
+                                       "50 – 60","60 – 70","70 – 80","80 – 90","90 – 100",""),
+  Frequency                       = c(5, 11, 19, 21, 16, 10, 8, 6, 3, 1, ""),
+  `More than cumulative frequency`= c(100, 95, 84, 65, 44, 28, 18, 10, 4, 1, 0),
+  `Lower class boundary`          = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+  check.names = FALSE
+)
+kable(mt_ogive,
+      caption = "More than ogive – cumulative frequency table") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = TRUE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+```{r more-than-ogive-plot, echo=TRUE, fig.cap="'More than' ogive curve of student marks"}
+mt_data <- data.frame(
+  lower_boundary = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+  cum_freq       = c(100, 95, 84, 65, 44, 28, 18, 10,  4,  1,   0)
+)
+
+ggplot(mt_data, aes(x = lower_boundary, y = cum_freq)) +
+  geom_line(color = "#117a65", linewidth = 1.2) +
+  geom_point(color = "#e74c3c", size = 3) +
+  scale_x_continuous(breaks = seq(0, 100, by = 10)) +
+  scale_y_continuous(breaks = seq(0, 100, by = 10)) +
+  labs(title = '"More than" Ogive Curve of Student Marks',
+       x     = "Lower Class Boundary (Marks)",
+       y     = "More Than Cumulative Frequency") +
+  theme_classic(base_size = 13) +
+  theme(plot.title = element_text(hjust = 0.5, color = "#1a5276", face = "bold"))
+```
+
+> From the graph there are **"y"** students who scored more than **"x"** marks.
+>
+> The value of **x** at the intersection of the two graphs is the **median value**.
+
+---
+
+**Both Ogive Curves on the Same Graph**
+
+The intersection of the "less than" and "more than" ogive curves gives the **median**.
+
+```{r both-ogives-plot, echo=TRUE, fig.cap="Both ogive curves – median at intersection"}
+lt_data$type <- "Less than"
+mt_data2 <- data.frame(
+  upper_boundary = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+  cum_freq       = c(100, 95, 84, 65, 44, 28, 18, 10,  4,  1,   0),
+  type           = "More than"
+)
+names(lt_data)[1] <- "boundary"
+names(mt_data2)[1] <- "boundary"
+
+both_ogive <- rbind(lt_data, mt_data2)
+
+ggplot(both_ogive, aes(x = boundary, y = cum_freq, color = type)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2.5) +
+  scale_color_manual(values = c("Less than" = "#1f618d", "More than" = "#117a65")) +
+  scale_x_continuous(breaks = seq(0, 100, by = 10)) +
+  scale_y_continuous(breaks = seq(0, 100, by = 10)) +
+  labs(title = '"Less than" and "More than" Ogive Curves',
+       x     = "Class Boundary (Marks)",
+       y     = "Cumulative Frequency",
+       color = "Ogive type") +
+  theme_classic(base_size = 13) +
+  theme(plot.title      = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        legend.position = "top")
+```
+
+> This is a graph of upper class boundaries and cumulative frequencies ($c_f$).
+
+---
+
+**Exercise 1.2**
+
+1. Consider the following data:
+
+```{r exercise-data-1, echo=FALSE}
+ex1 <- matrix(c(32,46,25,57,39,45,55,42,20,36,
+                58,12,38,34,22,40,33,64,43,46,
+                31,40,52,29,14,57,66,36,32,48,
+                46,42,47,54,65,44,35,19,54,25,
+                23,33,38,45,32,38,41,42,58,43),
+              nrow = 5, byrow = TRUE)
+kable(ex1, col.names = NULL,
+      caption = "Data for Exercise 1.2 (Question 1)") |>
+  kable_styling(bootstrap_options = c("bordered", "condensed"),
+                full_width = FALSE)
+```
+
+Arrange the data in a frequency distribution with the first class interval **10 – 19**.
+
+---
+
+2. The highway patrol set up a radar checkpoint and recorded the speed in miles per hour of a
+   random sample of 50 cars that passed the checkpoint in one hour. The speed of the cars was
+   recorded as follows:
+
+```{r exercise-data-2, echo=FALSE}
+ex2 <- matrix(c(74,66,65,55,48,56,50,75,75,67,
+                76,68,50,65,60,65,60,68,68,76,
+                68,77,63,65,52,52,63,80,80,70,
+                65,81,70,63,45,45,65,71,71,64,
+                55,70,64,45,64,64,40,55,55,71),
+              nrow = 5, byrow = TRUE)
+kable(ex2, col.names = NULL,
+      caption = "Speed (mph) of 50 cars at a radar checkpoint") |>
+  kable_styling(bootstrap_options = c("bordered", "condensed"),
+                full_width = FALSE)
+```
+
+Make a frequency distribution table using **5** as the class width.
+
+---
+
+3. Given the data below:
+
+```{r exercise-data-3, echo=FALSE}
+ex3 <- matrix(c(3.0,3.4,4.1,4.1,4.3,2.7,3.5,3.7,3.4,3.4,
+                3.8,4.2,3.1,3.9,3.1,4.1,2.8,3.7,4.4,3.5,
+                3.5,3.4,3.7,3.7,2.8,4.3,3.8,3.4,4.1,3.0,
+                4.4,4.1,4.1,3.6,3.4,2.7,3.6,3.0,3.4,4.3,
+                3.8,3.2,4.2,3.9,4.2,3.4,2.9,4.4,3.5,3.9),
+              nrow = 5, byrow = TRUE)
+kable(ex3, col.names = NULL,
+      caption = "Data for Exercise 1.2 (Question 3)") |>
+  kable_styling(bootstrap_options = c("bordered", "condensed"),
+                full_width = FALSE)
+```
+
+Form a frequency distribution using the classes **2.7–2.9, 3.0–3.2, 3.3–3.5, …**
+
+---
+
+4. Using Sturges' rule,
+
+$$K = 1 + 3.322 \log_{10} N$$
+
+where $K$ = number of class-intervals and $N$ = total number of observations; classify, in
+equal intervals, the following hours worked by 20 workers in a factory for one month:
+
+```{r exercise-data-4, echo=FALSE}
+ex4 <- matrix(c(155,120,50,110,116,95,125,42,175,130,
+                160,90,68,71,135,147,115,108,140,98),
+              nrow = 2, byrow = TRUE)
+kable(ex4, col.names = NULL,
+      caption = "Hours worked by 20 factory workers in one month") |>
+  kable_styling(bootstrap_options = c("bordered", "condensed"),
+                full_width = FALSE)
+```
+
+Find the **percentage frequency** in each class-interval.
+
+---
+
+5. Represent the following data by a histogram.
+
+```{r exercise-data-5, echo=FALSE}
+ex5_1 <- data.frame(Marks = c("0 – 10","10 – 20","20 – 30","30 – 40","40 – 50"),
+                    Frequency = c(5, 11, 19, 21, 16))
+ex5_2 <- data.frame(Marks = c("50 – 60","60 – 70","70 – 80","80 – 90","90 – 100"),
+                    Frequency = c(10, 8, 6, 3, 1))
+kable(cbind(ex5_1, ex5_2),
+      col.names = c("Marks","Frequency","Marks","Frequency"),
+      caption = "Frequency distribution of student marks") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  add_footnote("Total: 100", notation = "none")
+```
+
+---
+
+6. Using the data classified in questions 1, 2 and 3, draw:
+
+    i. A Histogram
+    ii. A Frequency polygon
+    iii. "Less than" and "more than" Ogive curves
+
+---
+
+7. A nutritionist is interested in knowing the percent of calories from fat which Kenyans intake
+   on a daily basis. To study this, the nutritionist randomly selects 25 Kenyans and evaluates
+   the percent of calories from fat consumed in a typical day. The results of the study are as
+   follows:
+
+```{r exercise-data-7, echo=FALSE}
+ex7 <- matrix(c(34,18,33,25,30,
+                42,40,33,39,40,
+                45,35,45,25,27,
+                23,32,33,47,23,
+                27,32,30,28,36),
+              nrow = 5, byrow = TRUE)
+kable(ex7, col.names = NULL,
+      caption = "Percent of calories from fat (25 Kenyans)") |>
+  kable_styling(bootstrap_options = c("bordered", "condensed"),
+                full_width = FALSE)
+```
+
+Construct a frequency distribution and the corresponding histogram.
+
+---
+
+8. In Kenya, approximately 45% of the population has blood type O; 40% type A; 11% type B; and
+   4% type AB. Illustrate this distribution of blood types with a **pie chart**.
+
+```{r exercise-8-pie, echo=TRUE, fig.cap="Distribution of blood types in Kenya"}
+blood_df <- data.frame(
+  Type       = c("Type O", "Type A", "Type B", "Type AB"),
+  Percentage = c(45, 40, 11, 4)
+)
+
+ggplot(blood_df, aes(x = "", y = Percentage, fill = Type)) +
+  geom_bar(stat = "identity", width = 1, color = "white", linewidth = 0.7) +
+  coord_polar(theta = "y", start = 0) +
+  geom_text(aes(label = paste0(Percentage, "%")),
+            position = position_stack(vjust = 0.5),
+            color = "white", size = 5, fontface = "bold") +
+  scale_fill_manual(values = c("Type O"  = "#2e86c1",
+                               "Type A"  = "#e67e22",
+                               "Type B"  = "#117a65",
+                               "Type AB" = "#8e44ad")) +
+  labs(title = "Distribution of Blood Types in Kenya",
+       fill  = "Blood Type") +
+  theme_void(base_size = 13) +
+  theme(plot.title      = element_text(hjust = 0.5, color = "#1a5276",
+                                       face = "bold", size = 13),
+        legend.position = "right")
+```
+
+---
+
+9. In the academic years 1982 to 1985, the number of students in College ABC were as follows:
+
+```{r exercise-9-table, echo=FALSE}
+ex9_df <- data.frame(
+  Year        = c("1982–83", "1983–84", "1984–85"),
+  Science     = c(1000, 1600, 2100),
+  Arts        = c(1500, 2000, 4000),
+  Law         = c(200, 350, 420)
+)
+kable(ex9_df,
+      caption = "Number of students in College ABC by faculty (1982–1985)") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+Represent the data by an appropriate diagram (Component bar chart).
+
+```{r exercise-9-chart, echo=TRUE, fig.cap="Component bar chart: students in College ABC by faculty (1982–1985)"}
+ex9_long <- data.frame(
+  Year    = rep(c("1982–83", "1983–84", "1984–85"), 3),
+  Faculty = c(rep("Science", 3), rep("Arts", 3), rep("Law", 3)),
+  Count   = c(1000, 1600, 2100, 1500, 2000, 4000, 200, 350, 420)
+)
+ex9_long$Year    <- factor(ex9_long$Year, levels = c("1982–83","1983–84","1984–85"))
+ex9_long$Faculty <- factor(ex9_long$Faculty, levels = c("Law","Science","Arts"))
+
+ggplot(ex9_long, aes(x = Year, y = Count, fill = Faculty)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.6) +
+  geom_text(aes(label = Count),
+            position = position_stack(vjust = 0.5),
+            color = "white", size = 4, fontface = "bold") +
+  scale_fill_manual(values = c("Science" = "#2e86c1",
+                               "Arts"    = "#e67e22",
+                               "Law"     = "#117a65")) +
+  labs(title = "Students in College ABC by Faculty (1982–1985)",
+       x     = "Academic Year",
+       y     = "Number of Students",
+       fill  = "Faculty") +
+  theme_classic(base_size = 13) +
+  theme(plot.title      = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        legend.position = "top")
+```
+
+---
+
+10. The table below gives data relating to the Kenyan exports and imports (in millions of Ksh)
+    during the four years ending 1999–2004:
+
+```{r exercise-10-table, echo=FALSE}
+ex10_df <- data.frame(
+  Year            = c("1999–2000","2000–2001","2001–2002","2002–2003","2003–2004"),
+  `Export`        = c(160000, 170000, 180000, 200000, 200000),
+  `Import`        = c(200000, 300000, 350000, 300000, 380000),
+  check.names     = FALSE
+)
+kable(ex10_df,
+      caption = "Kenyan exports and imports (millions of Ksh), 1999–2004. Source: KNBS") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+Represent this information using a suitable diagram (multiple bar chart).
+
+```{r exercise-10-chart, echo=TRUE, fig.cap="Multiple bar chart: Kenyan exports and imports (1999–2004)"}
+ex10_long <- data.frame(
+  Year  = rep(c("1999–2000","2000–2001","2001–2002","2002–2003","2003–2004"), 2),
+  Type  = c(rep("Export", 5), rep("Import", 5)),
+  Value = c(160000,170000,180000,200000,200000,
+            200000,300000,350000,300000,380000)
+)
+ex10_long$Year <- factor(ex10_long$Year,
+                         levels = c("1999–2000","2000–2001","2001–2002",
+                                    "2002–2003","2003–2004"))
+
+ggplot(ex10_long, aes(x = Year, y = Value / 1000, fill = Type)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +
+  geom_text(aes(label = paste0(Value/1000, "K")),
+            position = position_dodge(width = 0.7),
+            vjust = -0.4, size = 3.5) +
+  scale_fill_manual(values = c("Export" = "#2e86c1", "Import" = "#e67e22")) +
+  labs(title = "Kenyan Exports and Imports (1999–2004)",
+       x     = "Year",
+       y     = "Value (thousands of millions Ksh)",
+       fill  = "Trade type",
+       caption = "Source: KNBS") +
+  theme_classic(base_size = 13) +
+  theme(plot.title      = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        axis.text.x     = element_text(angle = 30, hjust = 1),
+        legend.position = "top")
+```
+
+---
+
+11. The following table shows the Kenyan population age structure as per the 2009 census:
+
+```{r exercise-11-table, echo=FALSE}
+ex11_df <- data.frame(
+  `Age`                   = c("0–14","15–24","25–54","55–64","65 years and above"),
+  `% of total population` = c(40.02, 19.15, 33.91, 3.92, 3.00),
+  `Male`                  = c(9557274, 4552448, 8170264, 856092, 614751),
+  `Female`                = c(9497870, 4567894, 7976751, 1009075, 813320),
+  check.names             = FALSE
+)
+kable(ex11_df,
+      caption = "Kenyan population age structure – 2009 Census. Source: CIA World Factbook 2017") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = TRUE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+How best would you represent this data diagrammatically?
+
+```{r exercise-11-chart, echo=TRUE, fig.cap="Component bar chart: Kenyan population by age group and sex (2009 Census)"}
+ex11_long <- data.frame(
+  Age = rep(c("0–14","15–24","25–54","55–64","65+"), 2),
+  Sex = c(rep("Male", 5), rep("Female", 5)),
+  Population = c(9557274, 4552448, 8170264, 856092, 614751,
+                 9497870, 4567894, 7976751, 1009075, 813320)
+)
+ex11_long$Age <- factor(ex11_long$Age,
+                        levels = c("0–14","15–24","25–54","55–64","65+"))
+
+ggplot(ex11_long, aes(x = Age, y = Population / 1e6, fill = Sex)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c("Male" = "#2e86c1", "Female" = "#e74c3c")) +
+  labs(title = "Kenyan Population Age Structure by Sex (2009 Census)",
+       x     = "Age Group",
+       y     = "Population (millions)",
+       fill  = "Sex",
+       caption = "Source: CIA World Factbook 2017") +
+  theme_classic(base_size = 13) +
+  theme(plot.title      = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        legend.position = "top")
+```
+
+---
+
+12. The following data represents the maximum temperatures in degrees centigrade predicted for
+    some 55 major cities on the 24th September 1993.
+
+```{r exercise-12-data, echo=FALSE}
+ex12 <- matrix(c(17,25,21,18,14,15,24,22,15,21,25,
+                 17,25,15,18,17,29,16,24,39,30,23,
+                 23,27,43,28,29,15,15,19,32,30,32,
+                 23,13,18,13,27,32,17,17,25,25,30,
+                 20,18,17,33,28,27,26,32,32,33,19),
+               nrow = 5, byrow = TRUE)
+kable(ex12, col.names = NULL,
+      caption = "Maximum temperatures (°C) for 55 major cities, 24 September 1993") |>
+  kable_styling(bootstrap_options = c("bordered", "condensed"),
+                full_width = FALSE)
+```
+
+Construct a frequency distribution table for these temperatures starting with the classes
+**11–17, 18–24, …**
+
+**Solution:**
+
+```{r exercise-12-freq-table, echo=FALSE}
+ex12_freq <- data.frame(
+  `Temperature (°C)` = c("11 – 17","18 – 24","25 – 31","32 – 38","39 – 45"),
+  Frequency          = c(15, 15, 16, 7, 2),
+  check.names        = FALSE
+)
+kable(ex12_freq,
+      caption = "Frequency distribution of maximum temperatures for 55 cities") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+---
+
+**(a) Histogram of Maximum Temperatures**
+
+Represent the data using a histogram.
+
+```{r exercise-12-histogram, echo=TRUE, fig.cap="Histogram of maximum temperatures for 55 cities"}
+temp_hist <- data.frame(
+  lower = c(10.5, 17.5, 24.5, 31.5, 38.5),
+  upper = c(17.5, 24.5, 31.5, 38.5, 45.5),
+  freq  = c(15, 15, 16, 7, 2)
+)
+
+ggplot(temp_hist, aes(xmin = lower, xmax = upper, ymin = 0, ymax = freq)) +
+  geom_rect(fill = "#2e86c1", color = "white", linewidth = 0.5) +
+  scale_x_continuous(breaks = c(10.5, 17.5, 24.5, 31.5, 38.5, 45.5)) +
+  labs(title = "Histogram of Maximum Temperatures (55 Cities, Sept 1993)",
+       x     = "Temperature (°C) – Class Boundaries",
+       y     = "Frequency") +
+  theme_classic(base_size = 13) +
+  theme(plot.title  = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+---
+
+**(b) Frequency Polygon of Maximum Temperatures**
+
+```{r exercise-12-polygon, echo=TRUE, fig.cap="Frequency polygon of maximum temperatures for 55 cities"}
+temp_poly <- data.frame(
+  midpoint  = c(3.5, 14, 21, 28, 35, 42, 49),
+  frequency = c(  0, 15, 15, 16,  7,  2,  0)
+)
+
+temp_bars <- data.frame(
+  lower = c(10.5, 17.5, 24.5, 31.5, 38.5),
+  upper = c(17.5, 24.5, 31.5, 38.5, 45.5),
+  freq  = c(15, 15, 16, 7, 2)
+)
+
+ggplot() +
+  geom_rect(data = temp_bars,
+            aes(xmin = lower, xmax = upper, ymin = 0, ymax = freq),
+            fill = "#aed6f1", color = "white", linewidth = 0.4, alpha = 0.6) +
+  geom_line(data = temp_poly,
+            aes(x = midpoint, y = frequency),
+            color = "#1a5276", linewidth = 1.2) +
+  geom_point(data = temp_poly,
+             aes(x = midpoint, y = frequency),
+             color = "#e74c3c", size = 3) +
+  scale_x_continuous(breaks = c(3.5, 14, 21, 28, 35, 42, 49)) +
+  labs(title = "Frequency Polygon of Maximum Temperatures (55 Cities)",
+       x     = "Class Mid-points (°C)",
+       y     = "Frequency") +
+  theme_classic(base_size = 13) +
+  theme(plot.title  = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+---
+
+**(c) Ogive Curves of Maximum Temperatures**
+
+```{r exercise-12-ogive-table, echo=FALSE}
+temp_ogive <- data.frame(
+  `Temperature (°C)`              = c("11 – 17","18 – 24","25 – 31","32 – 38","39 – 45"),
+  Frequency                       = c(15, 15, 16, 7, 2),
+  `Less than cumulative frequency`= c(15, 30, 46, 53, 55),
+  `More than cumulative frequency`= c(55, 40, 25,  9,  2),
+  `Upper class boundary`          = c(17.5, 24.5, 31.5, 38.5, 45.5),
+  `Lower class boundary`          = c(10.5, 17.5, 24.5, 31.5, 38.5),
+  check.names = FALSE
+)
+kable(temp_ogive,
+      caption = "Ogive table for maximum temperatures") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = TRUE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+```{r exercise-12-ogive-plot, echo=TRUE, fig.cap="Less than and more than ogive curves for maximum temperatures"}
+temp_lt <- data.frame(
+  boundary = c(10.5, 17.5, 24.5, 31.5, 38.5, 45.5),
+  cum_freq = c(0, 15, 30, 46, 53, 55),
+  type     = "Less than"
+)
+temp_mt <- data.frame(
+  boundary = c(10.5, 17.5, 24.5, 31.5, 38.5, 45.5),
+  cum_freq = c(55, 40, 25, 9, 2, 0),
+  type     = "More than"
+)
+temp_both <- rbind(temp_lt, temp_mt)
+
+ggplot(temp_both, aes(x = boundary, y = cum_freq, color = type)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("Less than" = "#1f618d", "More than" = "#117a65")) +
+  scale_x_continuous(breaks = c(10.5, 17.5, 24.5, 31.5, 38.5, 45.5)) +
+  scale_y_continuous(breaks = seq(0, 55, by = 5)) +
+  labs(title = "Ogive Curves for Maximum Temperatures (55 Cities)",
+       x     = "Class Boundary (°C)",
+       y     = "Cumulative Frequency",
+       color = "Ogive type") +
+  theme_classic(base_size = 13) +
+  theme(plot.title      = element_text(hjust = 0.5, color = "#1a5276", face = "bold"),
+        legend.position = "top",
+        axis.text.x     = element_text(angle = 30, hjust = 1))
+```
+
+---
+
+**(d) Using the ogive curves, estimate:**
+
+**i. The modal temperature**
+
+> The modal class is **25 – 31°C** (highest frequency = 16). The modal temperature is
+> approximately **28°C**.
+
+**ii. The median temperature**
+
+> The median is at cumulative frequency = 55/2 = 27.5.
+> From the "less than" ogive, reading off at $cf = 27.5$ gives a median of approximately
+> **$\approx 24.5°C$**.
+
+**iii. The lower and upper class boundaries of the temperature range within which the middle
+50% of all cities lie.**
+
+> The middle 50% lies between $Q_1$ (at $cf = 13.75$) and $Q_3$ (at $cf = 41.25$).
+> From the ogive: $Q_1 \approx 17.5°C$ and $Q_3 \approx 31.5°C$.
+
+**iv. The minimum and maximum temperature of the middle 80% of the cities.**
+
+> The middle 80% lies between the 10th percentile ($cf = 5.5$) and the 90th percentile
+> ($cf = 49.5$). From the ogive: $P_{10} \approx 14°C$ and $P_{90} \approx 35°C$.
+
+**v. On this particular day, a researcher was collecting data and required data from cities
+whose temperatures were above $29.5°C$. How many of these cities did he include in his study?**
+
+> From the "less than" ogive, at $x = 29.5°C$, cumulative frequency $\approx 43$.
+> Therefore, cities with temperature $> 29.5°C$ = $55 - 43 = \mathbf{12}$ **cities**.
+
+---
+
+# TOPIC TWO: MEASURES OF CENTRAL TENDENCY
+
+## Objectives
+
+By the end of the topic, the learner should be able to:
+
+- Define measure of central tendency and state the objectives of averaging.
+- Calculate arithmetic mean using different methods.
+- Compute combined mean for two or more data sets.
+- Calculate weighted average for a given data set.
+
+---
+
+## Introduction
+
+Even after the data have been classified and tabulated one often finds too much details for many uses that may be made of the information available. We, therefore, frequently need further analysis of the tabulated data. One of the powerful tools of analysis is to calculate a single average value that represents the entire mass of data. An "average" is a single value which is considered as the most representative or typical value for a given set of data. Such a value is neither the smallest nor the largest value, but is a number whose value is somewhere in the middle of the group. For this reason an average is frequently referred to as a **measure of central tendency** or **central value**.
+
+**Definition:** A measure of central tendency refers to measurement of values around which data is scattered.
+
+---
+
+## Objectives of Averaging
+
+There are two main objectives of study of averages:
+
+i) **To get one single value that describes the characteristics of the entire data.**
+   - Measures of central value, by condensing the mass of data in one single value, enables us to get an idea of the entire data.
+
+ii) **To facilitate comparison.**
+   - Measures of central value, by reducing the mass of data in one single value, enables comparisons to be made. Comparison can be made either at a point of time or over a period of time.
+
+---
+
+## Characteristics of a Good Average
+
+Since an average is a single value representing a group of values, it is desirable that such a value satisfies the following properties:
+
+i) **It should be easy to understand.**
+   - Since statistical methods are designed to simplify complexity, it is desirable that an average be such that it can be readily understood; otherwise its use is bound to be very limited.
+
+ii) **It should be simple to compute.**
+   - It should be simple to compute so that it can be used widely; however, simplicity should not be sought at the expense of other advantages.
+
+iii) **It should be based on all observations.**
+   - The average should depend upon each and every observation so that if any of the observations is dropped, the average itself is altered.
+
+iv) **It should be rigidly defined.**
+   - An average should be properly defined so that it has one and only one interpretation.
+
+v) **It should be capable of further algebraic or statistical treatment/analysis.**
+   - We should prefer to have an average that could be used for further statistical computations.
+
+vi) **It should have sampling stability.**
+   - We should prefer to get a value which has what statisticians call "sampling stability" — it should be least affected by the fluctuations of sampling.
+
+vii) **It should not be affected by the presence of extreme values.**
+   - Although each and every observation should influence the value of the average, none of the observations should influence it unduly.
+
+In this course we will look at the following important measures of central tendency which are generally used in various fields e.g. business, education, etc:
+
+1. Arithmetic mean
+2. Median
+3. Mode
+4. Geometric mean
+5. Harmonic mean
+
+---
+
+## Arithmetic Mean
+
+The most popular and widely used measure for representing the entire data by one value is what most laymen call an "average" and what statisticians call the **arithmetic mean**. Its value is obtained by adding together all the observations and by dividing this total by the number of observations.
+
+**(a) Calculation of Arithmetic Mean of Ungrouped Data Using Direct Method**
+
+Suppose we have $n$ observations: $x_1, x_2, x_3, \ldots, x_n$
+
+$\Sigma$ (sigma) is the notation for sum. Thus,
+
+$$\sum_{i=1}^{n} x_i = x_1 + x_2 + x_3 + \ldots + x_n$$
+
+is the sum of all observations. The arithmetic mean is denoted by $\bar{x}$.
+
+$\bar{x}$ of ungrouped data is given by:
+
+$$\bar{x} = \frac{x_1 + x_2 + x_3 + \ldots + x_n}{n} = \frac{\sum_{i=1}^{n} x_i}{n}$$
+
+---
+
+**(b) Calculation of Arithmetic Mean of Grouped Data Using Direct Method**
+
+If the $x_i$'s occur with frequencies $f_1, f_2, f_3, \ldots, f_n$ respectively, i.e.
+
+$$x_1 \rightarrow f_1, \quad x_2 \rightarrow f_2, \quad \ldots, \quad x_n \rightarrow f_n$$
+
+Then the arithmetic mean is given by:
+
+$$\bar{x} = \frac{\sum_{i=1}^{n} f_i x_i}{\sum f_i}$$
+
+where $\sum_{i=1}^{n} f_i$ is the total number of observations.
+
+---
+
+**(c) Properties of Arithmetic Mean**
+
+  **(i) Sum of Deviations from Mean is Zero**
+
+**Proof:**
+
+Consider $n$ observations $x_1, x_2, x_3, \ldots, x_n$ with mean $\bar{x}$.
+
+Let the deviations from the mean for each observation be:
+
+$$x_1 - \bar{x} = d_1, \quad x_2 - \bar{x} = d_2, \quad x_3 - \bar{x} = d_3, \quad \ldots, \quad x_n - \bar{x} = d_n$$
+
+Then sum of the deviations is:
+
+$$d_1 + d_2 + \ldots + d_n = \sum_{i=1}^{n} d_i = \sum_{i=1}^{n}(x_i - \bar{x})$$
+
+$$= \sum_{i=1}^{n} x_i - \sum_{i=1}^{n} \bar{x}$$
+
+But by definition $\bar{x} = \dfrac{\sum_{i=1}^{n} x_i}{n} \implies \sum_{i=1}^{n} x_i = n\bar{x}$
+
+Thus:
+
+$$\sum_{i=1}^{n} d_i = n\bar{x} - n\bar{x} = 0 \qquad \blacktriangle$$
+
+> **Exercise:** If the $x_i$'s occur with frequencies $f_1, f_2, f_3, \ldots, f_n$ respectively,
+> show that the sum of the deviations from the arithmetic mean is zero.
+
+---
+
+**(ii) Data Coding**
+
+- **Change of Origin**
+
+For a given set of data $x_1, x_2, x_3, \ldots, x_n$ with mean $\bar{x}$, if a constant value
+$a$ is added or subtracted from each value in the set, the mean of the new data set is
+$\bar{x} \pm a$.
+
+- **Change of Scale**
+
+For a given set of data $x_1, x_2, x_3, \ldots, x_n$ with mean $\bar{x}$, if a constant value
+$a$ is multiplied by or divided with each value in the set, the mean of the new data set is
+$\bar{x} \cdot a$ or $\dfrac{\bar{x}}{a}$.
+
+---
+
+- **Illustration – Change of Origin**
+
+**Adding a constant:** $x_1 + a, \quad x_2 + a, \quad \ldots, \quad x_n + a$
+
+Thus:
+
+$$\text{new mean} = \frac{\sum(x_i + a)}{n} = \frac{\sum x_i}{n} + \frac{\sum a}{n} = \bar{x} + a$$
+
+where $\bar{x} = \dfrac{\sum x_i}{n}$ and $\sum a = na$.
+
+**Subtracting a constant:** $d_i = x_i - a$
+
+Thus:
+
+$$\text{new mean} = \frac{\sum(x_i - a)}{n} = \frac{\sum x_i}{n} - \frac{\sum a}{n} = \bar{x} - a$$
+
+Therefore if $a$ is an **assumed mean** and $d_i = x_i - a$ (deviations from $x_i$):
+
+$$\implies x_i = d_i + a, \quad \text{and} \quad \bar{x} = \sum_{i=1}^{n} x_i$$
+
+Then:
+
+$$\bar{x} = \frac{\sum_{i=1}^{n}(d_i + a)}{n} = \frac{\sum_{i=1}^{n} d_i}{n} + \frac{\sum_{i=1}^{n} a}{n} = \frac{\sum_{i=1}^{n} d_i}{n} + a$$
+
+And for grouped data:
+
+$$\bar{x} = \frac{\sum f_i x_i}{\sum f_i} \quad \text{and hence} \quad \frac{\sum f_i(d_i + a)}{\sum f_i} = \frac{\sum f_i d_i + \sum f_i a}{\sum f_i} = \frac{\sum f_i d_i}{\sum f_i} + a$$
+
+Therefore to calculate arithmetic mean using the **assumed mean method** we have:
+
+$$\bar{x} = a + \frac{\sum d_i}{n} \quad \text{(ungrouped data)} \qquad \bar{x} = a + \frac{\sum f_i d_i}{\sum f_i} \quad \text{(grouped data)}$$
+
+---
+
+- **Illustration – Change of Scale**
+
+Assuming that all classes have similar class width $c$, then each deviation $d_i = x_i - a$ can
+be divided by $c$ to get a value $u_i \left(u_i = \dfrac{d_i}{c}\right)$ where $u_i$ is
+positive, negative or zero such that $d_i = cu_i$. Then:
+
+$$\bar{x} = a + \left(\frac{\sum_{i=1}^{n} f u_i}{\sum f_i}\right)c$$
+
+**Proof:**
+
+If $c$ is the size of each class then:
+
+$$x_2 = x_1 + c, \quad x_3 = x_1 + 2c, \quad x_4 = x_1 + 3c, \quad \ldots \quad x_q = x_1 + (q-1)c \quad \ldots \quad x_p = x_1 + (p-1)c$$
+
+This shows that the difference between any two consecutive values is a multiple of $c$:
+
+$$x_p - x_q = x_1 + (p-1)c - x_1 - (q-1)c$$
+
+$q$ is a multiple of $c$, hence deviations can be written as $d_i = cu_i$.
+
+And therefore:
+
+$$\bar{x} = a + \frac{\sum d_i}{n} = a + \frac{\sum cu_i}{n} = a + c\frac{\sum u_i}{n}$$
+
+To calculate the arithmetic mean using the **coding method** we use:
+
+$$\bar{x} = a + c\frac{\sum u_i}{n} \quad \text{(ungrouped data)} \qquad \bar{x} = a + c\frac{\sum f_i u_i}{\sum f_i} \quad \text{(grouped data)}$$
+
+where $u_i = \dfrac{d_i}{c}$ and $d_i = x_i - a$.
+
+---
+
+### Example 2.1
+
+The winning scores in a certain golf tournament in the years from 2000 to 2009 were as follows:
+
+$$284, \ 280, \ 277, \ 282, \ 279, \ 285, \ 281, \ 283, \ 278, \ 277$$
+
+Find the arithmetic mean of these scores.
+
+**Solution:**
+
+**i. Using direct method**
+
+By definition $\bar{x} = \dfrac{\sum_{i=1}^{n} x_i}{n}$
+
+$$\bar{x} = \frac{284 + 280 + 277 + 282 + 279 + 285 + 281 + 283 + 278 + 277}{10} = \frac{2806}{10} = 280.6$$
+
+**ii. Using assumed mean method (change of origin)**
+
+Rather than directly adding these values, we first subtract $a = 280$ from each one to obtain
+the new values $d_i = x_i - 280$:
+
+$$d_i: \quad 4, \ 0, \ -3, \ 2, \ -1, \ 5, \ 1, \ 3, \ -2, \ -3 \quad \text{and} \quad \sum d_i = 6$$
+
+By definition $\bar{x} = a + \dfrac{\sum d_i}{n} = 280 + \dfrac{6}{10} = \mathbf{280.6}$
+
+**iii. Using coding method (change of scale)**
+
+By definition $\bar{x} = a + c\dfrac{\sum u_i}{n}$
+
+This is ungrouped data and therefore we choose an appropriate value of $c$ — either the g.c.d
+of the $d_i$'s or any other value (use a factor that will not result in recurring decimals).
+
+Let $c = 5$, then $u_i = \dfrac{d_i}{5}$ results in:
+
+$$0.8, \ 0, \ -0.6, \ 0.4, \ -0.2, \ 1, \ 0.2, \ 0.6, \ -0.4, \ -0.6$$
+
+Hence: $\bar{x} = a + c\dfrac{\sum u_i}{n} = 280 + 5 \times \dfrac{1.2}{10} = \mathbf{280.6}$
+
+---
+
+### Example 2.2
+
+The following is a frequency table giving the ages of members of a cultural club for young
+adults.
+
+```{r example2-2-table, echo=FALSE}
+ex22 <- data.frame(
+  Age       = c(15, 16, 17, 18, 19, 20),
+  Frequency = c(2,  5, 11,  9, 14, 13)
+)
+kable(ex22,
+      caption = "Ages of members of a cultural club") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+Find the arithmetic mean of the ages of the 54 members of the club.
+
+**Solution:**
+
+This data is ungrouped but has been placed in a simple frequency distribution table. Hence:
+
+$$\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} = \frac{15 \times 2 + 16 \times 5 + 17 \times 11 + 18 \times 9 + 19 \times 14 + 20 \times 13}{54} = 18.24$$
+
+This is equivalent to writing the formula as:
+
+$$\bar{x} = \frac{\sum_{i=1}^{n} f_i x_i}{\sum_{i=1}^{n} f_i}$$
+
+---
+
+### Example 2.3
+
+Calculate the arithmetic mean of the following data using the three methods.
+
+**Solution:** Use $a = 75$, $c = 5$
+
+```{r example2-3-table, echo=FALSE}
+ex23 <- data.frame(
+  Class   = c("53–57","58–62","63–67","68–72","73–77","78–82","83–87","88–92",""),
+  f       = c(2, 12, 12, 25, 27, 10, 9, 3, "Σf = 100"),
+  x       = c(55, 60, 65, 70, 75, 80, 85, 90, ""),
+  fx      = c(110, 720, 780, 1750, 675, 800, 765, 270, "Σfx = 7220"),
+  `d = x − a` = c(-20, -15, -10, -5, 0, 5, 10, 15, ""),
+  fd      = c(-40, -180, -120, -75, 0, 50, 90, 45, "Σfd = −280"),
+  `u = d/c` = c(-4, -3, -2, -1, 0, 1, 2, 3, ""),
+  fu      = c(-8, -36, -24, -25, 0, 10, 18, 9, "Σfu = −56"),
+  check.names = FALSE
+)
+kable(ex23,
+      caption = "Arithmetic mean computation – three methods (a = 75, c = 5)") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = TRUE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  row_spec(9, bold = TRUE, background = "#d6eaf8")
+```
+
+**i. Direct method:**
+
+$$\bar{x} = \frac{\sum f_i x_i}{\sum f_i} = \frac{7220}{100} = \mathbf{72.2}$$
+
+**ii. Assumed mean method:**
+
+$$\bar{x} = a + \frac{\sum fd}{\sum f} = 75 + \frac{-280}{100} = 75 - 2.8 = \mathbf{72.2}$$
+
+**iii. Coding method:**
+
+$$\bar{x} = a + c\frac{\sum fu}{\sum f} = 75 + 5 \times \frac{-56}{100} = 75 - 2.8 = \mathbf{72.2}$$
+
+---
+
+## Correcting Incorrect Values
+
+It sometimes happens that due to an oversight or mistake in copying, certain wrong values are
+taken while calculating the mean. The process of correction is simple: from $\sum x$ deduct the
+wrong observations and add the correct observations, then divide the correct $\sum x$ by the
+number of observations.
+
+---
+
+### Example 2.4
+
+**i.** The average weekly wage for a group of 25 persons working in a factory was calculated to
+be \$378.40. It was later discovered that one figure was misread as \$160 instead of the correct
+value \$200. Calculate the correct average wage.
+
+**Solution:**
+
+$$\text{Incorrect } \sum x = 378.40 \times 25 = 9{,}460$$
+
+$$\text{Correct } \sum x = 9{,}460 - 160 + 200 = 9{,}500$$
+
+$$\text{Correct mean} = \frac{9{,}500}{25} = \mathbf{\$380}$$
+
+---
+
+**ii.** The mean of 200 observations was 50. Later on, it was discovered that two observations
+were wrongly read as 92 and 8 instead of 192 and 88. Find out the correct mean.
+
+**Solution:**
+
+$$\text{Incorrect } \sum x = 50 \times 200 = 10{,}000$$
+
+$$\text{Correct } \sum x = 10{,}000 - 92 - 8 + 192 + 88 = 10{,}180$$
+
+$$\text{Correct mean} = \frac{10{,}180}{200} = \mathbf{50.9}$$
+
+---
+
+### Exercise
+
+1. The mean of seven numbers is seven. One number is removed and the mean increases to 10.
+   Find the number which was removed.
+
+2. The average weight of a group of 30 friends increases by 1 kg when the weight of their
+   football coach was added. If the average weight of the group after including the weight of
+   the football coach is 31 kg, what is the weight of their football coach?
+
+3. The average wages of a worker during a fortnight comprising 15 consecutive working days was
+   \$90 per day. During the first 7 days, his average wages was \$87 per day and the average
+   wages during the last 7 days was \$92 per day. What was his wage on the 8th day?
+
+4. The average age of a group of 10 students was 20. The average age increased by 2 years when
+   two new students joined the group. What is the average age of the two new students who
+   joined the group?
+
+---
+
+## Combined Mean
+
+If we have the arithmetic mean and number of observations of two or more related groups, we can
+compute the combined average using the following formula:
+
+$$\bar{X}_{12} = \frac{N_1 \bar{X}_1 + N_2 \bar{X}_2}{N_1 + N_2}$$
+
+where:
+
+- $\bar{X}_{12}$ = Combined mean of the two groups
+- $\bar{X}_1$ = Arithmetic mean of the first group
+- $\bar{X}_2$ = Arithmetic mean of the second group
+- $N_1$ = Number of observations in the first group
+- $N_2$ = Number of observations in the second group
+
+---
+
+### Example 2.5
+
+**i.** There are two branches of a company employing 100 and 80 employees respectively. If the
+arithmetic means of the monthly salaries paid by two branches are \$4,570 and \$6,750
+respectively, find the arithmetic mean of the salaries of the employees of the company as a
+whole.
+
+**Solution:**
+
+$$\bar{X}_{12} = \frac{N_1 \bar{X}_1 + N_2 \bar{X}_2}{N_1 + N_2} = \frac{100 \times 4570 + 80 \times 6750}{100 + 80} = \frac{457000 + 540000}{180} = \frac{997000}{180} = \mathbf{\$5538.89}$$
+
+> If we have to find out the combined mean of three related groups, the above formula can be
+> extended as:
+> $$\bar{X}_{123} = \frac{N_1\bar{X}_1 + N_2\bar{X}_2 + N_3\bar{X}_3}{N_1 + N_2 + N_3}$$
+
+---
+
+**ii.** The mean of marks in Statistics of 100 students of a class was 72. The mean of marks of
+boys was 75, while their number was 70. Find out the mean marks of girls in the class.
+
+**Solution:**
+
+We are given $N_1 + N_2 = 100$, $\bar{X}_{12} = 72$, mean of boys $\bar{X}_1 = 75$,
+number of boys $N_1 = 70$. We have to find out the mean marks of girls, i.e., $\bar{X}_2$.
+
+$$72 = \frac{70 \times 75 + 30 \times \bar{X}_2}{100}$$
+
+$$7200 = 5250 + 30\bar{X}_2 \implies \bar{X}_2 = \frac{7200 - 5250}{30} = \frac{1950}{30} = \mathbf{65}$$
+
+Hence the mean marks of girls in the class = **65**.
+
+---
+
+**iii.** The mean age of a combined group of men and women is 30 years. If the mean age of the
+group of men is 32 and that of the group of women is 25, find out the percentage of men and
+women in the group.
+
+**Solution:**
+
+Let $N_1$ represent the percentage of men and $N_2$ represent the percentage of women so that
+$N_1 + N_2 = 100$. We are given $\bar{X}_{12} = 30$, $\bar{X}_1 = 32$, $\bar{X}_2 = 25$.
+
+$$30 = \frac{32N_1 + 25N_2}{N_1 + N_2} = \frac{32N_1 + 25(100 - N_1)}{100}$$
+
+$$3000 = 32N_1 + 2500 - 25N_1 = 7N_1 + 2500$$
+
+$$N_1 = \frac{500}{7} \approx 71.43\% \quad \text{(men)}, \qquad N_2 \approx 28.57\% \quad \text{(women)}$$
+
+---
+
+**iv.** A shopkeeper has 50 cold drink bottles. Some of the bottles are 1-litre and some are
+2-litre bottles. The average cold drink of the bottles is 1200 ml. Find the number of 2-litre
+bottles. (1 litre = 1000 ml)
+
+**Solution:**
+
+Let the number of 1-litre bottles be $N_1$ and the number of 2-litre bottles be $N_2$. We know
+that $N_1 + N_2 = 50$. The average of group 1 ($\bar{X}_1$) is 1000 ml and the average of
+group 2 ($\bar{X}_2$) is 2000 ml. The weighted average is 1200 ml.
+
+$$1200 = \frac{1000 N_1 + 2000 N_2}{N_1 + N_2} = \frac{1000 N_1 + 2000 N_2}{50}$$
+
+$$60000 = 1000 N_1 + 2000 N_2$$
+
+Since $N_1 + N_2 = 50 \implies N_1 = 50 - N_2$:
+
+$$60000 = 1000(50 - N_2) + 2000 N_2 = 50000 + 1000 N_2$$
+
+$$N_2 = 10 \quad \text{and} \quad N_1 = 40$$
+
+Thus, the shopkeeper has **10 bottles of 2-litre**.
+
+---
+
+## Weighted Arithmetic Mean
+
+The arithmetic mean discussed above gives equal importance to all observations. But there are
+cases where the relative importance of the different observations is not the same. When this is
+so, we compute **weighted arithmetic mean**. The term **"weight"** stands for the relative
+importance of the different observations. The formula for computing weighted arithmetic mean is:
+
+$$\bar{X}_w = \frac{\sum WX}{\sum W}$$
+
+where $W$ represents the respective weights.
+
+---
+
+### Example 2.6
+
+A student's final marks in Mathematics, Physics, English and Accounting are respectively 82,
+86, 90, and 70. If the respective credits received for these courses are 3, 5, 3, and 1;
+determine the approximate average mark.
+
+**Solution:**
+
+```{r example2-6-table, echo=FALSE}
+ex26 <- data.frame(
+  Subject    = c("Mathematics","Physics","English","Accounting","Total"),
+  `Marks (X)`= c(82, 86, 90, 70, ""),
+  `Weight (W)`= c(3, 5, 3, 1, "ΣW = 12"),
+  `WX`        = c(246, 430, 270, 70, "ΣWX = 1016"),
+  check.names = FALSE
+)
+kable(ex26,
+      caption = "Weighted arithmetic mean of student marks") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  row_spec(5, bold = TRUE, background = "#d6eaf8")
+```
+
+$$\bar{X}_w = \frac{\sum WX}{\sum W} = \frac{1016}{12} = \mathbf{84.67}$$
+
+---
+
+## Merits and Demerits of the Arithmetic Mean
+
+**Merits:** Satisfies properties (i), (ii), (iii), (iv), (v), and (vi).
+
+**Demerits:** Does not satisfy property (vii), i.e., it is **affected by extreme observations**.
+
+---
+
+# Median
+
+## Ungrouped Data
+
+Order the values of a data set of size $n$ from smallest to largest (in order of magnitude).
+
+- If $n$ is **odd**, the median is the value in position $\dfrac{n+1}{2}$
+- If $n$ is **even**, the median is the average of the values in positions $\dfrac{n}{2}$ and
+  $\dfrac{n}{2} + 1$, i.e. it is the arithmetic mean of the two middle values.
+
+---
+
+### Example 2.7
+
+**i.** Find the median of: $1, 10, 7, 20, 5$
+
+**Solution:**
+
+Put the data in an array and arrange in ascending order: $1, 5, 7, 10, 20$
+
+$$\text{Median} = \frac{5+7}{2} = 6$$
+
+**ii.** Find the median of the set of numbers: $21, 3, 7, 17, 19, 31, 46, 20$ and $43$.
+
+---
+
+## Grouped Data
+
+The following formula is used:
+
+$$\text{Median} = l_m + \frac{\left(\frac{N}{2} - c_f\right)}{f_m} \times c$$
+
+where:
+
+- $l_m$ = Lower limit of median class
+- $N = \sum f$ = total number of units
+- $c$ = Size of median class
+- $f_m$ = Frequency of median class
+- $c_f$ = Cumulative frequency of class preceding the median class
+
+For quartiles:
+
+$$Q_i = l_2 + \frac{\left(\frac{iN}{4} - c_{fp}\right)}{f_q} \times (l_2 - l_1)$$
+
+---
+
+### Example 2.9
+
+```{r example2-9-median-table, echo=FALSE}
+ex29 <- data.frame(
+  Class = c("53–57","58–62","63–67","68–72","73–77","78–82","83–87","88–92"),
+  f     = c(2, 12, 12, 25, 27, 10, 9, 3),
+  cf    = c(2, 14, 26, 51, 78, 88, 97, 100)
+)
+names(ex29) <- c("Class", "f", "$c_f$")
+kable(ex29,
+      caption = "Frequency distribution for median calculation") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  row_spec(4, background = "#fdebd0")
+```
+
+Median class: $\dfrac{N}{2} = \dfrac{100}{2} = 50$, so the median class is **68–72**.
+
+$$\text{Median} = l_m + \frac{\left(\frac{N}{2} - c_f\right)}{f_m} \times c = 67.5 + \frac{(50 - 26) \times 5}{25} = 67.5 + 4.8 = \mathbf{72.3}$$
+
+---
+
+# Quartiles and Mode
+
+## Objectives
+
+By the end of the topic, the learner should be able to:
+
+1. Calculate and interpret quartiles and mode of given data sets.
+2. Estimate the quartiles and modal value of given data sets graphically.
+
+---
+
+## Lower Quartile ($Q_1$)
+
+Divides the distribution into four equal parts.
+
+### Calculation of Lower Quartile – Grouped Data
+
+Determine the particular class in which the value of the lower quartile lies. Use
+$\dfrac{N}{4}$ to locate the lower quartile class. Apply the following formula:
+
+$$Q_1 = L + \frac{\left(\frac{N}{4} - \text{p.c.f.}\right)}{f} \times i$$
+
+where:
+
+- $L$ = Lower limit of the lower quartile class
+- p.c.f. = Preceding cumulative frequency to the lower quartile class
+- $f$ = Frequency of the lower quartile class
+- $i$ = The class-interval of the lower quartile class
+
+---
+
+## Upper Quartile ($Q_3$)
+
+Divides the distribution into three out of four equal parts.
+
+### Calculation of Upper Quartile – Grouped Data
+
+Determine the particular class in which the value of the upper quartile lies. Use
+$\dfrac{3N}{4}$ to locate the upper quartile class. Apply the following formula:
+
+$$Q_3 = L + \frac{\left(\frac{3N}{4} - \text{p.c.f.}\right)}{f} \times i$$
+
+where:
+
+- $L$ = Lower limit of the upper quartile class
+- p.c.f. = Preceding cumulative frequency to the upper quartile class
+- $f$ = Frequency of the upper quartile class
+- $i$ = The class-interval of the upper quartile class
+
+---
+
+### Example 2.8
+
+The profits earned by 100 companies during 2010–2011 are given below:
+
+```{r example2-8-input, echo=FALSE}
+ex28_in <- data.frame(
+  `Profits ($)` = c("20 – 30","30 – 40","40 – 50","50 – 60"),
+  `No. of companies` = c(4, 8, 18, 30),
+  `Profits ($) ` = c("60 – 70","70 – 80","80 – 90","90 – 100"),
+  `No. of companies ` = c(15, 10, 8, 7),
+  check.names = FALSE
+)
+kable(ex28_in,
+      caption = "Profits earned by 100 companies (2010–2011)") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+**Solution:**
+
+```{r example2-8-solution, echo=FALSE}
+ex28_sol <- data.frame(
+  `Profits ($)`         = c("20 – 30","30 – 40","40 – 50","50 – 60",
+                             "60 – 70","70 – 80","80 – 90","90 – 100"),
+  `No. of companies (f)`= c(4, 8, 18, 30, 15, 10, 8, 7),
+  `Cumulative frequency`= c(4, 12, 30, 60, 75, 85, 93, 100),
+  check.names = FALSE
+)
+kable(ex28_sol,
+      caption = "Cumulative frequency table for quartile calculation") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  row_spec(3, background = "#d5f5e3") |>
+  row_spec(5, background = "#fdebd0")
+```
+
+**Lower Quartile, $Q_1$** = size of $\dfrac{N}{4} = \dfrac{100}{4} = 25^{th}$ observation.
+
+Hence $Q_1$ lies in the class **40 – 50**. $L = 40$, p.c.f. $= 12$, $f = 18$, $i = 10$.
+
+$$Q_1 = 40 + \frac{\left(25 - 12\right)}{18} \times 10 = 40 + \frac{130}{18} = 40 + 7.22 = \mathbf{\$47.22}$$
+
+> Hence 25% of the companies earn an annual profit of **\$47.22 or less**.
+
+**Upper Quartile, $Q_3$** = size of $\dfrac{3N}{4} = \dfrac{3 \times 100}{4} = 75^{th}$
+observation.
+
+Hence $Q_3$ lies in the class **60 – 70**. $L = 60$, p.c.f. $= 60$, $f = 15$, $i = 10$.
+
+$$Q_3 = 60 + \frac{\left(75 - 60\right)}{15} \times 10 = 60 + \frac{150}{15} = 60 + 10 = \mathbf{\$70}$$
+
+> Hence 75% of the companies earn an annual profit of **\$70 or less**.
+
+> These values, i.e., $Q_1$, median, and $Q_3$ can also be obtained from the **Ogive curve**.
+
+In general, the $p^{th}$ percentile $X_p$ is the value of $x$ in the ogive corresponding to
+$\dfrac{pN}{100}$.
+
+> **Note:**
+>
+> - The median is the **50th percentile** value.
+> - The lower quartile is the **25th percentile** value.
+> - The upper quartile is the **75th percentile** value.
+
+The formula for evaluating $X_p$ is:
+
+$$X_p = L + \frac{\left(\frac{pN}{100} - \text{p.c.f.}\right)}{f} \times i$$
+
+---
+
+## Mode
+
+It is the value with the **highest frequency**.
+
+For ungrouped data e.g. $1, 2, 3, 4, 5, 5, 5$ the mode is **5**.
+
+---
+
+### Example 2.9 (Mean, Median, Mode and Range)
+
+Find the mean, median, mode, and range for the following list of values:
+$13, 18, 13, 14, 13, 16, 14, 21, 13$
+
+**Solution:**
+
+The median is the middle value, so first rewrite the list in numerical order:
+
+$$13, 13, 13, 13, 14, 14, 16, 18, 21$$
+
+There are nine numbers in the list, so the middle one is the
+$\dfrac{9+1}{2} = 5^{th}$ number:
+
+$$13, 13, 13, \mathbf{13}, \underline{14}, 14, 16, 18, 21$$
+
+So the **median is 14**.
+
+The **mode is 13**, since 13 is repeated 4 times.
+
+The **range** $= 21 - 13 = 8$.
+
+$$\text{Mean} = \frac{13+18+13+14+13+16+14+21+13}{9} = \frac{135}{9} = \mathbf{15}$$
+
+> **Note:** The mean, in this case, is not a value from the original list. This is a common
+> result. You should not assume that your mean will be one of your original numbers.
+
+| Statistic | Value |
+|-----------|-------|
+| Mean      | 15    |
+| Median    | 14    |
+| Mode      | 13    |
+| Range     | 8     |
+
+---
+
+## Mode for Grouped Data
+
+$$\text{Mode} = l_m + \left(\frac{\delta_1}{\delta_1 + \delta_2}\right)c$$
+
+where:
+
+- $l_m$ = Lower class boundary of modal class
+- $\delta_1 = f_{\text{mode}} - f_1$ = Excess of modal frequency minus the next lower class
+  frequency
+- $\delta_2 = f_{\text{mode}} - f_2$ = Excess of modal frequency minus the next higher class
+  frequency
+- $c$ = Class size
+
+---
+
+### Mode Calculation – Example
+
+```{r mode-example-table, echo=FALSE}
+mode_df <- data.frame(
+  Class       = c("58–62","63–67","68–72","73–77","78–82","83–87","88–92"),
+  Frequencies = c(12, 12, 25, 27, 10, 9, 3)
+)
+kable(mode_df,
+      caption = "Frequency distribution for mode calculation") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  row_spec(4, background = "#fdebd0")
+```
+
+The modal class is **73–77** (highest frequency = 27).
+
+$$l_m = 72.5, \quad c = 5, \quad \partial_1 = 27 - 25 = 2, \quad \partial_2 = 27 - 10 = 17$$
+
+$$\text{Mode} = l_m + \frac{\partial_1 \, c}{\partial_1 + \partial_2} = 72.5 + \frac{2 \times 5}{2 + 17} = 72.5 + \frac{10}{19} = 72.5 + 0.5263 = \mathbf{73.03 \text{ Units}}$$
+
+---
+
+# Geometric Mean (G)
+
+## Objectives
+
+By the end of the topic, the learner should be able to:
+
+1. Calculate and interpret geometric mean and harmonic mean.
+
+---
+
+In business and economic problems, very often we are faced with questions pertaining to
+**percentage rates of change over time**. Neither the mean, the median nor mode is appropriate
+in these instances. The correct average is obtained through the use of the **geometric mean** or,
+what amounts to the same thing, through the use of the familiar **compound interest formula**.
+
+Geometric mean is defined as the $N$th root of the product of $N$ observations of a given
+data. Symbolically:
+
+$$G = \sqrt[N]{x_1 \cdot x_2 \cdot x_3 \cdots x_N} = (x_1 \cdot x_2 \cdot x_3 \cdots x_N)^{1/N}$$
+
+where $x_1, x_2, \ldots, x_N$ refer to the various observations of the data.
+
+When the number of observations is three or more, logarithms are used to simplify calculations:
+
+$$G = \text{Antilog}\left(\frac{\sum \log x}{N}\right)$$
+
+---
+
+## Calculation of Geometric Mean – Ungrouped Data
+
+$$G = \text{Antilog}\left(\frac{\sum \log x}{N}\right)$$
+
+For **grouped data**, first find the midpoints and then apply:
+
+$$G = \text{Antilog}\left(\frac{\sum f \log X}{\sum f}\right)$$
+
+where $X$ is the midpoint.
+
+---
+
+## Applications of Geometric Mean
+
+- Used to find the average per cent increase in sales, production, population, etc.
+- It is considered to be the best average in construction of **index numbers**.
+
+---
+
+### Example 2.10
+
+Compared to the previous year the overhead expenses went up by 32% in 2006; they increased by
+40% in the next year and by 50% in the following year. Calculate the average rate of increase
+in the overhead expenses over the three years.
+
+**Solution:**
+
+In average ratios and percentages, geometric mean is more appropriate.
+
+```{r example2-10-table, echo=FALSE}
+ex210 <- data.frame(
+  `% Rise` = c(32, 40, 50),
+  `Expenses at end of year (X)` = c(132, 140, 150),
+  `Log X` = c(2.1206, 2.1461, 2.1761),
+  check.names = FALSE
+)
+kable(ex210,
+      caption = "Geometric mean – overhead expenses") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  add_footnote("Σ Log X = 6.4428", notation = "none")
+```
+
+$$G = \text{Antilog}\left(\frac{6.4428}{3}\right) = \text{Antilog}(2.1476) = 140.5$$
+
+**Average rate of increase in overhead expenses** $= 140.5 - 100 = \mathbf{40.5\%}$
+
+---
+
+### Example 2.11
+
+The annual rates of growth of output of a factory in 5 years are 5.0, 7.5, 2.5, 5.0, and 10.0
+respectively. What is the compound rate of growth of output per annum for the period?
+
+**Solution:**
+
+```{r example2-11-table, echo=FALSE}
+ex211 <- data.frame(
+  `Annual rate of growth` = c(5.0, 7.5, 2.5, 5.0, 10.0),
+  `Output relatives at end of year (X)` = c(105.0, 107.5, 102.5, 105.0, 110.0),
+  `Log X` = c(2.0212, 2.0314, 2.0107, 2.0212, 2.0414),
+  check.names = FALSE
+)
+kable(ex211,
+      caption = "Geometric mean – annual rates of growth of factory output") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  add_footnote("Σ Log X = 10.1259", notation = "none")
+```
+
+$$G = \text{Antilog}\left(\frac{10.1259}{5}\right) = \text{Antilog}(2.0252) = 105.9$$
+
+**The compound rate of growth of output per annum** $= 105.9 - 100 = \mathbf{5.9\%}$
+
+---
+
+# Harmonic Mean (H)
+
+Harmonic mean is based on the **reciprocal of the numbers averaged**. It is defined as the
+reciprocal of the arithmetic mean of the reciprocals of the individual observations:
+
+$$H = \frac{N}{\sum \dfrac{1}{x}} = \frac{N}{\dfrac{1}{x_1} + \dfrac{1}{x_2} + \cdots + \dfrac{1}{x_N}}$$
+
+where $x_1, x_2, \ldots, x_N$ refer to the various observations of the data.
+
+For **grouped data**:
+
+$$H = \frac{\sum f}{\sum \dfrac{f}{X}}$$
+
+where $X$ is the midpoint of the various classes and $f$ their corresponding frequencies.
+
+---
+
+## Applications of Harmonic Mean
+
+Useful for computing the average:
+
+- Rate of increase of profits
+- Speed at which a journey has been performed
+- Price at which an article has been sold
+
+---
+
+### Example 2.12
+
+**(a)** Calculate harmonic mean of numbers 10, 20, 25, 40, 50.
+
+**(b)** Calculate harmonic mean from the following frequency distribution:
+
+```{r example2-12b-input, echo=FALSE}
+ex212b_in <- data.frame(
+  Marks           = c("0 – 10","10 – 20","20 – 30","30 – 40","40 – 50"),
+  `No. of students` = c(8, 15, 20, 4, 3),
+  check.names = FALSE
+)
+kable(ex212b_in,
+      caption = "Frequency distribution for harmonic mean") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white")
+```
+
+**Solution:**
+
+**(a)**
+
+```{r example2-12a-table, echo=FALSE}
+ex212a <- data.frame(
+  X   = c(10, 20, 25, 40, 50, ""),
+  `1/X` = c(0.100, 0.050, 0.040, 0.025, 0.020, "Σ(1/X) = 0.235"),
+  check.names = FALSE
+)
+kable(ex212a,
+      caption = "Harmonic mean – ungrouped data") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  row_spec(6, bold = TRUE, background = "#d6eaf8")
+```
+
+$$H = \frac{N}{\sum \frac{1}{X}} = \frac{5}{0.235} = \mathbf{21.28}$$
+
+**(b)**
+
+```{r example2-12b-table, echo=FALSE}
+ex212b <- data.frame(
+  Marks  = c("0 – 10","10 – 20","20 – 30","30 – 40","40 – 50",""),
+  X      = c(5, 15, 25, 35, 45, ""),
+  f      = c(8, 15, 20, 4, 3, "Σf = 50"),
+  `f/X`  = c(1.600, 1.000, 0.800, 0.114, 0.067, "Σ(f/X) = 3.581"),
+  check.names = FALSE
+)
+kable(ex212b,
+      caption = "Harmonic mean – grouped data") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "bordered", "condensed"),
+                full_width = FALSE) |>
+  row_spec(0, bold = TRUE, background = "#1f618d", color = "white") |>
+  row_spec(6, bold = TRUE, background = "#d6eaf8")
+```
+
+$$H = \frac{\sum f}{\sum \frac{f}{X}} = \frac{50}{3.581} = \mathbf{13.96}$$
+
+---
+
+
