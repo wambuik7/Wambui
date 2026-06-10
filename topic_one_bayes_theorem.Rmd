@@ -1,0 +1,561 @@
+---
+title:  "Bayesian Data Analysis"
+author: "Dr. Margaret Kinyua"
+subtitle: "Introduction to Bayesian Methods"
+institute: "Department of Mathematics, Statistics & Actuarial Science, Karatina University"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: false
+    theme: cosmo
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: false
+    latex_engine: xelatex
+  rmdformats::readthedown:
+    toc_depth: 3
+    number_sections: false
+header-includes:
+- \usepackage{amsmath}
+- \usepackage{xfrac}
+- \usepackage{booktabs}
+- \usepackage{array}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Topic One: Review of Bayes’ Theorem and Introduction to Bayesian Approach
+
+## Objectives
+
+By the end of the topic the learner should be able to:
+
+- Understand the rules of conditional probability and Bayes' theorem.
+- Describe the differences between Frequentist/Classical and Bayesian approaches.
+- Explain the advantages of Bayesian Inference over Frequentist inference.
+
+---
+
+## Review of Bayes’ Theorem
+
+Let \( B_1, B_2, \ldots, B_k \) be a collection of mutually exclusive events forming a partition of the sample space \( S \), such that \( P(B_i) > 0 \) for all \( i = 1,2,\ldots,k \).
+
+Then:
+\[
+B_i \cap B_j = \emptyset \quad \forall i \neq j, \quad \text{and} \quad \bigcup_{i=1}^{k} B_i = S
+\]
+
+For any event \( A \subseteq S \), the conditional probability is defined as:
+\[
+P(B_i \mid A) = \frac{P(A \cap B_i)}{P(A)}
+\]
+and thus
+\[
+P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{\sum_{j=1}^{k} P(A \mid B_j)\,P(B_j)}
+\]
+
+---
+
+**Proof**
+
+Since \( B_i \)’s form a partition of \( S \), we have:
+\[
+S = B_1 \cup B_2 \cup \cdots \cup B_k
+\]
+
+Since \( A \subseteq S \), then:
+\[
+A = A \cap S
+\]
+
+Substituting:
+\[
+A = A \cap (B_1 \cup B_2 \cup \cdots \cup B_k)
+\]
+
+Distributing intersection:
+\[
+A = (A \cap B_1) \cup (A \cap B_2) \cup \cdots \cup (A \cap B_k)
+\]
+
+Since the sets are disjoint:
+\[
+P(A) = \sum_{i=1}^{k} P(A \cap B_i)
+\]
+
+Using conditional probability:
+\[
+P(A \cap B_i) = P(A \mid B_i)\,P(B_i)
+\]
+
+Therefore:
+\[
+P(A) = \sum_{i=1}^{k} P(A \mid B_i)\,P(B_i)
+\]
+
+Substituting into the definition:
+\[
+P(B_i \mid A)
+= \frac{P(A \cap B_i)}{P(A)}
+= \frac{P(A \mid B_i)\,P(B_i)}{\sum_{j=1}^{k} P(A \mid B_j)\,P(B_j)}
+\]
+
+---
+
+**Special Case (Two Events Only)**
+
+For two events \( B \) and \( \bar{B} \):
+
+\[
+P(B \mid A)
+= \frac{P(A \mid B)\,P(B)}{P(A \mid B)\,P(B) + P(A \mid \bar{B})\,P(\bar{B})}
+\]
+---
+
+**Bayes' Theorem in Discrete Cases**
+
+**Example 1**
+
+Suppose that our prior knowledge about a stock indicates that the probability $\theta$ that the price will rise for any given day is either $0.4$ or $0.6$, i.e. based upon past data say from similar stocks we believe that $\theta$ is equally likely to be $0.4$ or $0.6$.
+
+Thus we have prior probabilities:
+
+$$P(\theta = 0.4) = 0.5 \qquad \text{or} \qquad P(\theta = 0.6) = 0.5$$
+
+Suppose we observe the stock for five consecutive days and its price rises all 5 days. Assume that the price changes are independent across all five days so that the probability that price will increase on each day is $\theta^5$.
+
+Given this information, we may suspect that $\theta$ is $0.6$ and not $0.4$. Therefore the probability $\theta = 0.6$ given five consecutive price increases should be greater than the prior probability of $0.5$ but how much greater?
+
+Let $A$ be the event that price rises in 5 consecutive days. Thus
+
+\[
+P(\theta = 0.6 \mid A)
+=
+\frac{P(A \mid \theta = 0.6)\,P(\theta = 0.6)}
+{P(A \mid \theta = 0.6)\,P(\theta = 0.6) + P(A \mid \theta = 0.4)\,P(\theta = 0.4)}
+\]
+
+\[
+=
+\frac{0.6^{5} \times 0.5}
+{0.6^{5} \times 0.5 + 0.4^{5} \times 0.5}
+\]
+
+\[
+= 0.8836
+\]
+
+```{r example 1, echo=FALSE}
+# Prior probabilities
+p_theta_06 <- 0.5
+p_theta_04 <- 0.5
+
+# Likelihoods: probability of 5 consecutive price increases
+p_A_given_06 <- 0.6^5
+p_A_given_04 <- 0.4^5
+
+# Posterior probability using Bayes' theorem
+posterior_06 <- (p_A_given_06 * p_theta_06) /
+  (p_A_given_06 * p_theta_06 + p_A_given_04 * p_theta_04)
+
+cat("Posterior probability that theta = 0.6:", round(posterior_06, 4))
+```
+
+Thus our probability that $\theta = 0.6$ was $0.5$ before we observed 5 consecutive price increases but it is $0.8836$ after observing the event.
+
+Probability before observing the data are called **prior probabilities** and probability conditional on observing the data are called **posterior probabilities**.
+
+Hence $0.5$ is prior and $0.8836$ is posterior.
+
+---
+
+**Example 2**
+
+Suppose there is a mixed school having 60% students as boys and 40% girls as students. The girls wear trousers or skirts in equal numbers. The boys all wear trousers. An observer sees a random student from a distance. All the observer can see is that the student is wearing trousers. What is the probability that this student is a girl?
+
+**Solution**
+
+These can be computed with Bayes' theorem.
+
+Let $G$ be the event that the student observed is a girl. Let $T$ be the event that the student observed is wearing a trouser.
+
+**Required:**
+
+$P(G \mid T)$ — the probability that the student is a girl given she is wearing trousers.
+
+**Given:**
+
+$P(G)$ — Probability that the student is a girl regardless of any other information the observer sees. A random student means all the students have the same probability of being observed. Percentage of girls among the students is 40%, $P(G) = 0.4$.
+
+$P(B)$ — Probability that the student is not a girl i.e. a boy regardless of any other information ($B$ is a complement to $G$) i.e. boys are 60%, $P(B) = 0.6$.
+
+$P(T \mid G)$ — Student wearing trousers given that the student is a girl; they are likely to wear skirts as trousers hence $P(G \mid T)$ = 0.5$.
+
+$P(T \mid B)$ — Probability of students wearing trousers given that the student is a boy $= 1$ (all wear trousers).
+
+$P(T)$ — Probability of a randomly selected student wearing trousers regardless of any other information:
+
+$$P(T) = P(T \cap G) + P(T \cap B) = P(T \mid G)P(G) +P(T \mid B)P(B) = 0.5 \times 0.4 + 1 \times 0.6 = 0.8$$
+
+The probability of the observer having spotted a girl given that the observed student was wearing trousers can be computed by:
+
+$$P(G \mid T) = \frac{P(G \cap T)}{P(T)} = \frac{P(T \mid G)P(G)}{P(T \mid G)P(G) +P(T \mid B)P(B)} = \frac{0.5 \times 0.4}{0.8} = 0.25$$
+
+```{r example2, echo=FALSE}
+p_G <- 0.4       # P(Girl)
+p_B <- 0.6       # P(Boy)
+p_T_given_G <- 0.5  # P(Trousers | Girl)
+p_T_given_B <- 1.0  # P(Trousers | Boy)
+
+# Total probability of wearing trousers
+p_T <- p_T_given_G * p_G + p_T_given_B * p_B
+
+# Posterior: P(Girl | Trousers)
+p_G_given_T <- (p_T_given_G * p_G) / p_T
+
+cat("P(T) =", p_T, "\n")
+cat("P(Girl | Trousers) =", p_G_given_T)
+```
+
+---
+
+## Formal Definition of Bayes Theorem
+
+Formally, we may define Bayes' theorem as follows:
+
+$$P(Y \mid X) = \frac{P(X \mid Y)P(Y)}{P(X)}$$
+
+- $Y$ stands for any hypothesis whose probability may be affected by data (called evidence). Often there are competing hypotheses from which one chooses the most probable.
+
+- The evidence $E$ corresponds to new data that were not used in computing the prior probability.
+
+- $P(Y)$ — the **prior probability** is the probability of $Y$ before $E$ is observed. This indicates one's previous estimate of the probability that a hypothesis is true before current evidence.
+
+- $P(Y \mid X)$ — the **posterior probability** is the probability of $Y$ given $X$, i.e. after $X$ is observed. This tells us what we want to know: the probability of a hypothesis given the observed evidence.
+
+- $(P(X \mid Y)$ — the probability of observing $X$ given $Y$; as a function of $X$ with $Y$ fixed, this is the **likelihood**. It indicates the compatibility of the evidence with the given hypothesis.
+
+- $P(X)$ — is sometimes termed as the **marginal likelihood** or **model evidence**.
+
+---
+
+## Bayes' Rule Terminology
+
+$$\underbrace{P(Y \mid X)}_{\text{Posterior}} = \frac{\overbrace{PX\mid Y)}^{\text{Likelihood}} \times \overbrace{P(Y)}^{\text{Prior}}}{\underbrace{P(X)}_{\text{Evidence}}}$$
+
+- **Likelihood** — propensity for observing a certain value of $X$ given a certain value of $Y$.
+- **Prior** — what we know about $Y$ before seeing $X$.
+- **Posterior** — what we know about $Y$ after seeing $X$.
+- **Evidence** — a constant to ensure that the left-hand side is a valid distribution (marginal).
+
+---
+
+**BAYES' RULE**
+
+In probability theory and its applications, Bayes' rule indicates the odds of event $A_1$ to event $A_2$ before (prior to) and after (posterior) conditional on another event $B$.
+
+The odds on $A_1$ to event $A_2$ is simply the ratio of the probabilities of the two events:
+
+$$O(A_1 : A_2) = \frac{P(A_1)}{P(A_2)}$$
+
+This prior odd is the ratio of the conditional or posterior probabilities given the event $B$.
+
+The relationship is expressed in terms of the likelihood ratio of the conditional probability of the event $B$ given that $A_1$ is the case or that $A_2$ is the case respectively.
+
+The rule simply states: **posterior odds equal prior odds times Bayes factor**. When arbitrarily many events $A$ are of interest, not just two, the rule can be rephrased as: **posterior is proportional to the prior times likelihood**:
+
+$$P(A \mid B) \propto P(A)\ P(B \mid A)$$
+
+where the proportionality symbol means that the left-hand side is proportional to (i.e. equals a constant times) the right-hand side as $A$ varies for fixed (or given) $B$. 
+
+Bayes' rule is an equivalent way to formulate Bayes' theorem. If we know the odds against $A$ we also know the probability of $A$.
+
+---
+
+**Bayes' Rule in Relation to Single Events**
+
+Given events $A_1$, $A_2$ and $B$, Bayes' rule states that the conditional odds $A_1 : A_2$ given $B$ are equal to the marginal odds of $A_1 : A_2$ multiplied by the Bayes factor or likelihood ratio $\Lambda$:
+
+$$O(A_1 : A_2 \mid B) = O(A_1 : A_2) \times \Lambda (A_1 : A_2 \mid B$$
+
+where:
+
+$$\Lambda (A_1 : A_2 \mid B) = \frac{P(B \mid A_1)}{P(B \mid A_2)}$$
+
+Hence the odds and conditional odds known as prior odds and posterior odds are defined by:
+
+$$O(A_1 : A_2) = \frac{P(A_1)}{P(A_2)}$$
+
+<!--$$O\!\left(A_1 : \frac{A_2}{B}\right) = \frac{P\!\left(\frac{B}{A_1}\right)}{P\!\left(\frac{B}{A_2}\right)} \times \frac{P\!\left(\frac{A_1}{B}\right)}{P\!\left(\frac{A_2}{B}\right)} = \frac{P(B \cap A_1)}{P(B \cap A_2)} = \frac{P\!\left(\frac{A_1}{B}\right) \times P(B)}{P\!\left(\frac{A_2}{B}\right) \times P(B)} = \frac{P\!\left(\frac{A_1}{B}\right)}{P\!\left(\frac{A_2}{B}\right)}$$-->
+
+**N/B**
+
+Bayes' rule can also be written as:
+
+$$O(A \mid B) = O(A) \cdot \Lambda(A \mid B)$$
+
+The posterior odds on $A$ equals the prior odds on $A$ times the likelihood ratio for $A$ given information $B$, i.e.:
+
+$$\text{posterior odds} = \text{prior odds} \times \text{likelihood ratio}$$
+
+---
+
+**Bayes' Rule in Relation to Many Events**
+
+If we think of $A$ as arbitrary and $B$ as fixed, then we can denote Bayes' theorem as:
+
+$$P(A \mid B) = \frac{P(A)P(B \mid A)}{P(B)}$$
+
+in the form $P(A \mid B) \propto P(A)\ P(B \mid A)$, where the proportionality symbol means that as $A$ varies but keeping $B$ fixed, the left-hand side is equal to a constant times the right-hand side, i.e.:
+
+$$\textbf{posterior is proportional to the prior times likelihood}$$
+
+---
+
+**Practical Application: Bayes' Theorem in Diagnostic Testing and Actuarial Science Concepts**
+
+In diagnostic testing (e.g. drug tests), there are five key concepts:
+
+**Prevalence** is the probability or proportion of occurrence of a disease or behavior in the population at a particular point in time.
+
+> *Example:* Proportion of bus drivers who use illegal drugs.
+
+**Sensitivity** is the probability of a positive result given person is actually positive.
+
+> *Example:* The probability of a home pregnancy test coming up positive for a woman who is actually pregnant.
+
+**Specificity** is the probability of a negative result given person is actually negative.
+
+> *Example:* The probability of a home pregnancy test coming up negative for a woman who is not pregnant.
+
+**False Positives** are when results come back positive for someone who is actually negative.
+
+> *Example:* A home pregnancy test coming up positive for a woman who is not pregnant.
+
+**False Negatives** are when results come back negative for someone who is actually positive.
+
+> *Example:* A home pregnancy test coming up negative for a woman who is actually pregnant.
+
+---
+
+**Example 3: Diabetes Screening**
+
+Consider the following data on a diabetes screening test based on a non-fasting blood screen test, which is relatively inexpensive and painless.
+
+```{r diabetes_table, echo=FALSE}
+diabetes_data <- data.frame(
+  Diabetes = c("Yes", "No", "Total"),
+  Positive = c(350, 1900, 2250),
+  Negative = c(150, 7600, 7750),
+  Total = c(500, 9500, 10000)
+)
+
+knitr::kable(diabetes_data,
+             caption = "Diabetes Screening Test Results",
+             col.names = c("Diabetes?", "Positive", "Negative", "Total"),
+             align = c("l", "r", "r", "r"))
+```
+
+With these results, we see the **Sensitivity** is 350 out of 500 or **70%** and the **Specificity** is 7600 out of 9500 or **80%**. The overall prevalence of diabetes is 500 out of 10,000 or **5%**.
+
+From this test, how many were "missed" (i.e. actually had diabetes — the false negatives) and how many were incorrectly identified as having the disease (i.e. false positives)?
+
+The test missed identifying 150 (a **false negative rate** of 150/500 or **30%**) while the **false positive rate** was 1900/9500 or **20%**.
+
+We can see the importance of getting second opinions. What happens with the second opinion (or second test) is that a more expensive and accurate test is used (e.g. a clinical test for pregnancy or a glucose tolerance test for diabetes that requires fasting and a day at a clinic/hospital/doctor's office). These additional tests are done to verify results before continuing with what can be expensive and uncomfortable treatments.
+
+```{r diabetes_calc, echo=FALSE}
+# Sensitivity, Specificity, Prevalence
+sensitivity <- 350 / 500
+specificity <- 7600 / 9500
+prevalence  <- 500 / 10000
+false_neg_rate <- 150 / 500
+false_pos_rate <- 1900 / 9500
+
+cat("Sensitivity:        ", round(sensitivity, 4), "\n")
+cat("Specificity:        ", round(specificity, 4), "\n")
+cat("Prevalence:         ", round(prevalence, 4), "\n")
+cat("False Negative Rate:", round(false_neg_rate, 4), "\n")
+cat("False Positive Rate:", round(false_pos_rate, 4), "\n")
+```
+
+---
+
+**Example 4**
+
+Suppose there is a drug test that is 98% accurate, meaning 98% of the time it shows a true positive result for someone using the drug and 98% of the time it shows a true negative result for nonusers of the drug. Next, assume 0.5% of people use the drug. If a person selected at random tests positive for the drug, find out whether the person is actually a user of the drug.
+
+**Solution**
+
+$$\frac{0.98 \times 0.005}{\left[(0.98 \times 0.005) + \left((1 - 0.98) \times (1 - 0.005)\right)\right]} = \frac{0.0049}{0.0049 + 0.0199} = 19.76\%$$
+
+```{r drug_test, echo=FALSE}
+accuracy   <- 0.98
+prevalence <- 0.005
+
+p_pos_given_user    <- accuracy
+p_pos_given_nonuser <- 1 - accuracy
+
+numerator   <- p_pos_given_user * prevalence
+denominator <- numerator + p_pos_given_nonuser * (1 - prevalence)
+
+posterior <- numerator / denominator
+cat("P(User | Positive Test) =", round(posterior * 100, 2), "%")
+```
+
+Bayes' theorem shows that even if a person tested positive in this scenario, it is actually much more likely the person is **not** a user of the drug.
+
+---
+
+**Example 5**
+
+Imagine you are a financial analyst at an investment bank. According to your research of publicly-traded companies, 60% of the companies that increased their share price by more than 5% in the last three years replaced their CEOs during the period. At the same time, only 35% of the companies that did not increase their share price by more than 5% in the same period replaced their CEOs. Knowing that the probability that the stock prices grow by more than 5% is 4%, find the probability that the shares of a company that fires its CEO will increase by more than 5%.
+
+Before finding the probabilities, you must first define the notation of the probabilities:
+
+- $P(A)$ — the probability that the stock price increases by 5%
+- $P(B)$ — the probability that the CEO is replaced
+- $P(A|B)$ — the probability of the stock price increasing by 5% given that the CEO has been replaced
+- $P(B|A)$ — the probability of the CEO replacement given the stock price has increased by 5%
+
+Using Bayes' theorem, we can find the required probability:
+
+$$P(A|B) = \frac{P(B|A)\, P(A)}{P(B|A)\, P(A) + P(B|\sim A)\, P(\sim A)}$$
+
+```{r ceo_example, echo=FALSE}
+p_A         <- 0.04   # P(stock increases > 5%)
+p_B_given_A <- 0.60   # P(CEO replaced | stock increases > 5%)
+p_B_given_notA <- 0.35  # P(CEO replaced | stock does NOT increase > 5%)
+
+# Total probability of CEO replacement
+p_B <- p_B_given_A * p_A + p_B_given_notA * (1 - p_A)
+
+# Posterior: P(stock increases > 5% | CEO replaced)
+p_A_given_B <- (p_B_given_A * p_A) / p_B
+
+cat("P(B) =", round(p_B, 4), "\n")
+cat("P(stock > 5% | CEO replaced) =", round(p_A_given_B * 100, 2), "%")
+```
+
+Thus, the probability that the shares of a company that replaces its CEO will grow by more than 5% is **6.67%**.
+
+---
+
+## Frequentist versus Bayesian Approach
+
+Frequentist statistics, which could also be described as experimental or inductive, relies on the law of observations. Bayesian statistics, which is theoretical/deductive, enables us to combine the information provided by data with *a priori* knowledge from previous studies or expert opinions.
+
+Bayesian inference differs from classical/frequentist inference in four ways:
+
+1. **Frequentist inference** estimates the probability of the data having occurred given a particular hypothesis ($P(Y|X)$) whereas **Bayesian inference** provides a quantitative measure of the probability of a hypothesis being true in light of the available data ($P(X|Y)$).
+
+2. Their **definitions of probability** differ: frequentist inference defines probability in terms of long-run (infinite) relative frequencies of events, whereas Bayesian inference defines probability as an individual's degree of belief in the likelihood of an event.
+
+3. **Bayesian inference** uses prior knowledge along with the sample data whereas **frequentist inference** uses only the sample data.
+
+4. **Bayesian inference** treats model parameters as random variables whereas **frequentist inference** considers them to be estimates of fixed, 'true' quantities.
+
+**Example**
+
+**A Frequentist says** — probability distribution arises from some random process on the sample space.
+
+- $P(x = 1) = 0.3$ means if patients are chosen at random from the population of clinic patients, 30% of them will have the disease.
+- $P(x = 1 \mid y = 1) = 0.73$ means if patients are chosen at random from the population of clinic patients who test positive, 73% of them will have the disease.
+- The probability George Smith has the disease is either $1$ or $0$, depending on whether he does or does not have the disease.
+
+**A Bayesian says** — probability distribution represents someone's beliefs about the world.
+
+- $P(x = 1) = 0.3$ means if we have no information except that George walked to the clinic, then our degree of belief is 30% that he has the disease.
+- $P(x = 1 \mid y = 1) = 0.73$ means if we learn that George tested positive, our belief increases to 73% that he has the disease.
+- The probability that George has the disease depends on our information about George. If we know only that he went to the clinic, then the probability is 30%. If also we learn that he tested positive, our belief becomes 70%. If we receive a definite diagnosis then the probability he has the disease is either $1$ or $0$ depending on whether he has or does not have the disease.
+
+**Toss a Coin Ten Times**
+
+If we use **frequentist modeling**, then there is a "real" probability of getting tails. If, for example, we get tails on six out of ten tosses, then, based on the results of this experiment, the probability of getting tails is equal to $6/10 = 0.6$ (or 60%).
+
+According to the **Bayesian approach**, we are not interested in this probability but rather in its *a priori* law. Essentially, if the coin is balanced, then in theory the probability of previous experiments.
+
+When it comes to coin tossing, clearly the probability calculated by the frequentist method will settle at around $0.5$ if the coin is tossed a large number of times.
+
+---
+
+## Advantages of Bayesian Inference over Frequentist Inference
+
+The following is a list of advantages of Bayesian inference over Frequentist inference.
+
+1. Bayesian inference allows informative priors so that prior knowledge of results of a previous model can be used to inform the current model while frequentist inference has no room for prior information.
+
+2. Bayesian inference can avoid problems with model identification by manipulating prior distributions (usually complex models). Frequentist inference with any numerical approximation algorithm does not have prior distributions, and can become stuck in regions of flat density, causing problems with identification.
+
+3. Bayesian inference considers the data to be fixed (which it is), and parameters to be random because they are unknowns. Frequentist inference considers the unknown parameters to be fixed, and the data to be random, estimating "not based on the data at hand plus hypothetical repeated sampling in the future with similar data." The Bayesian approach delivers the answer to the right question in the sense that Bayesian inference provides answers conditional on the observed data and not based on the distribution of estimators or test statistics over imaginary samples not observed.
+
+4. Bayesian inference estimates a full probability model. Frequentist inference does not. There is no frequentist probability distribution associated with parameters or hypotheses.
+
+5. Bayesian inference includes uncertainty in the probability model, yielding more realistic predictions. Frequentist inference does not include uncertainty of the parameters, yielding less realistic predictions.
+
+6. Bayesian inference obeys the likelihood principle. Frequentist inference, including maximum likelihood estimation (M.L.E) and the general methods of moments or generalized estimating equation, violates the likelihood principle. "The likelihood principle, by itself, is not sufficient to build a method of inference but should be regarded as a minimum requirement of any viable form of inference. This is a controversial point of view for anyone familiar with modern econometrics literature."
+
+7. Bayesian inference uses observed data only. Frequentist inference uses both observed data and future data that are unobserved and hypothetical.
+
+8. Bayesian inference uses prior distributions, so more information is used and 95% probability intervals of posterior distributions should be narrower than 95% confidence intervals of frequentist point-estimates.
+
+9. Bayesian inference uses probability intervals (quantiles-based, highest posterior density, or preferably lowest posterior loss) to state the probability that $\theta$ is between two points. Frequentist inference uses confidence intervals, which must be interpreted with probability of zero or one that $\theta$ is in the region, and the frequentist never knows whether it is or is not, but can only say that if 100 repeated samples were drawn in future, that it would be in the region of 95 samples.
+
+---
+
+**Remarks**
+
+## What are the Limitations of the Bayesian Approach?
+
+The Bayesian approach starts from a premise that is completely objective in the case of tossing a coin, but becomes subjective when it comes to a user experiment. For A/B tests for example, it is not recommended to take into action the results of previous experiments that were produced over a different timescale and in potentially completely dissimilar conditions. After all, the first principle of A/B testing is to compare two variations in exactly the same conditions, concurrently and not sequentially.
+
+**Invalid Results**
+
+Bayesian statistics deduce the probability of an event by looking at other events that have previously been assessed. In the context of an A/B test, this *a priori* knowledge can be flawed, being affected by seasonality or just by trends, which can skew the results.
+
+In other words, the risk of detecting a false positive becomes much higher. This is not necessarily a major issue in the case of spam detection, however, it is much more problematic in the case of an A/B test.
+
+**Inaccurate Results**
+
+Another disadvantage of the Bayesian method is that it is much more difficult to grasp. Bayesian statistics try to calculate a probability distribution, which is a much more complex concept than a simple confidence index. In the case of A/B testing, this probability distribution is based on conversion gains or losses.
+
+---
+
+## Frequentist Approach: Benefits and Limitations
+
+The frequentist method, universally employed in economics and health, has also become the norm in A/B testing. This approach is based solely on the data from tests run in strictly similar conditions for each variation (hence its reputation as a data-driven method).
+
+However, the frequentist method also has certain disadvantages:
+
+1. The required traffic volume does not allow tests to be run in all circumstances. Obtaining statistically significant results when we run A/B tests on pages with low traffic can be difficult or take a long time.
+
+2. The reliability of the results is only confirmed at the end of the test. You have to be able to resist the temptation of checking the results while the test is ongoing, as the interim results simply are not valid.
+
+3. As shown by the practice of A/A testing, the risk of obtaining a false positive result remains.
+
+---
+
+**Which Approach Should You Choose, Frequentist or Bayesian?**
+
+One of the most rigorous analyses comparing the frequentist and Bayesian approaches was carried out by the statistician Valen Johnson and summarized in his article published in the *Proceedings of the National Academy of Sciences* in 2013.
+
+The aim of his frequentist analysis was to explore the data collected so as to identify a significant effect that could only be explained by the hypothesis of the experiment.
+
+His Bayesian analysis compared two hypotheses and assessed the chances that one was true in comparison with the other, by using the data available at the time of the experiment and the information already known about the subject.
+
+His conclusion was that, in the case of a Bayesian approach, the threshold of statistical significance, commonly accepted as being 95%, is insufficient for concluding that the test is significant or not.
+
+In other words, this only further confirms that the choice of the frequentist approach by A/B testing tool providers is valid.
+
+---
+
+**Should We Disqualify the Bayesian Method?**
+
+No, because the Bayesian method has significant advantages when circumstances allow. The A/B testing world logically adopted the frequentist approach because its greater accuracy and lesser complexity in terms of reading results easily outweigh the disadvantages mentioned above.
+
+Generally speaking, this question of which method is better, the Bayesian or the frequentist, is subject to ongoing debate amongst experts and extends far beyond the immediate needs of marketing teams. All in all, one method is not better than the other; what matters is understanding the underlying logic of each or seeking advice from someone who is familiar with both.
